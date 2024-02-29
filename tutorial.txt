@@ -1,0 +1,15 @@
+For untargeted data, it's like having a big box of different ingredients
+without knowing what they are. We need to use special tools to identify
+and measure each ingredient in the box. Once we have all the measurements,
+we can start analyzing them to see if there are any patterns or differences
+between the ingredients. For targeted data, it's like having a specific list
+of ingredients that we already know. We can directly measure and analyze
+these ingredients to see if there are any differences or changes
+in their levels. Just like following a recipe for a cake,
+the workflow for statistical analysis of metabolomics data helps us understand
+and learn more about the different ingredients in our samples and
+how they can impact our health and the world around us. After we have analyzed
+both the untargeted and targeted data, we can compare the results and
+see if there are any similarities or differences between the two groups.
+This helps us understand how different ingredients or substances
+in our samples may affect our bodies or the environment.

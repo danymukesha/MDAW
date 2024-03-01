@@ -12,5 +12,7 @@ Description: Computational workflow for statistical analysis
     of data analysis and reporting.
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData:
+LazyData: false
 RoxygenNote: 7.3.1
+Depends: 
+    R (>= 2.10)

@@ -3,7 +3,7 @@ pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   Introduction: Introduction.html
-last_built: 2024-03-02T16:03Z
+last_built: 2024-03-02T18:21Z
 urls:
   reference: https://danymukesha.github.io/MDAW/reference
   article: https://danymukesha.github.io/MDAW/articles

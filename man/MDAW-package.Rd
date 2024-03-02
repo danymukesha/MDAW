@@ -6,12 +6,16 @@
 \alias{MDAW-package}
 \title{MDAW: Metabolomic Data Analysis Workflow}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Enhancing Reproducibility: A Computational Workflow for Statistical Analysis of Untargeted and Targeted Metabolomics Data.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://danymukesha.github.io/MDAW/}
+  \item \url{https://github.com/danymukesha/MDAW}
+  \item Report bugs at \url{https://github.com/danymukesha/MDAW/issues}
 }
 
 }

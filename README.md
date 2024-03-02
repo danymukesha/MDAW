@@ -1,9 +1,7 @@
 
-# MDAW
+# {MDAW} <br>**M***etabolomic ***D***ata ***A***nalysis ***W***orkflow*
 
-*Metabolomic Data Analysis Workflow.*
-
-## Kickstarting
+## Getting started
 
 [Introduction](https://danymukesha.github.io/MDAW/articles/Introduction.html)
 

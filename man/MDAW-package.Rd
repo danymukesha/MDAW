@@ -8,6 +8,13 @@
 \description{
 Enhancing Reproducibility: A Computational Workflow for Statistical Analysis of Untargeted and Targeted Metabolomics Data.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://danymukesha.github.io/MDAW/}
+}
+
+}
 \author{
 \strong{Maintainer}: Dany Mukesha \email{danymukesha@gmail.com} (\href{https://orcid.org/0009-0001-9514-751X}{ORCID})
 

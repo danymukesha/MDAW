@@ -3,7 +3,7 @@
 \docType{data}
 \name{table_data}
 \alias{table_data}
-\title{Metabolite Data with the Interactive dataTable}
+\title{Metabolite \code{Data} with the Interactive Table}
 \format{
 \code{table_data} This table encompasses 140 samples and 149 metabolites;
 in a data frame with 140 rows and 149 columns:

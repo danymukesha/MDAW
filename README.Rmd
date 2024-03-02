@@ -1,0 +1,23 @@
+---
+output: github_document
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# MDAW
+
+*Metabolomic Data Analysis Workflow.*
+
+## Kickstarting
+
+[Introduction](https://danymukesha.github.io/MDAW/articles/Introduction.html)
+
+`MDAW` is a computational workflow for statistical analysis of untargeted
+and targeted metabolomic data.

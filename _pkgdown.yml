@@ -1,6 +1,6 @@
 url: https://danymukesha.github.io/MDAW/
 template:
-  bootstrap: 5
+  package: rotemplate
 authors:
   Dany Mukesha:
     href: https://danymukesha.github.io/

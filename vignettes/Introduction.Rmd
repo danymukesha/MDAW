@@ -38,7 +38,7 @@ signatures underlying biological phenomena. By providing a structured
 framework and leveraging state-of-the-art methods enhances the robustness 
 of data analysis in metabolomics.
 
-Here are the outlines a workflow for analyzing metabolomics data 
+Here are the outlines for `MDAW`, a workflow for analyzing metabolomics data, 
 in a binary classification study. 
 Let's see together the breakdown steps which consists this workflow:
 
@@ -100,5 +100,7 @@ between sample groups.
 library(sessioninfo)
 sessioninfo::session_info()
 ```
+
+
 
 

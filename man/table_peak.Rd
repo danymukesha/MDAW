@@ -3,7 +3,7 @@
 \docType{data}
 \name{table_peak}
 \alias{table_peak}
-\title{Metabolite Peak with the Interactive dataTable}
+\title{Metabolite \code{Peak} with the Interactive Table}
 \format{
 \code{table_peak} This table encompasses 149 metabolites and features,
 in a data frame with 129 rows and 4 columns:
@@ -11,7 +11,7 @@ in a data frame with 129 rows and 4 columns:
 \item{RowID}{The \code{RowID} column represents row id of the metabolite}
 \item{Idx}{The \code{idX} column represents index of the metabolite}
 \item{Name}{The \code{Name} column represents name of the metabolite}
-\item{Label}{The \code{Label} column represents chemical nomeclature
+\item{Label}{The \code{Label} column represents chemical nomenclature
 of the metabolite}
 }
 }
@@ -22,7 +22,7 @@ of the metabolite}
 table_peak
 }
 \description{
-Each row within the table_peak corresponds to a METABOLITE,
+Each row within the table_peak corresponds to a metabolite,
 with the following column descriptions:
 }
 \keyword{datasets}

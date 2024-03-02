@@ -15,25 +15,25 @@ knitr::opts_chunk$set(
 ```
 
 In metabolomics studies, the accurate analysis and interpretation
-of complex data sets is of utmost importance in order to gain meaningful 
+of complex data sets is of utmost importance in order to obtain meaningful 
 biological insights. To address this issue, a robust computational workflow 
 for statistical analysis of both untargeted and targeted metabolomics data 
 is essential. Such a workflow not only ensures the reliability of results, but 
-also promotes reproducibility in data analysis and reporting - `a cornerstone 
-of scientific integrity`. 
+also promotes reproducibility in data analysis and reporting - `a fundamental
+principle for scientific integrity` (Resnik DB. et al., 2016). 
 
 In this context, the development of a comprehensive computational framework 
-is essential. This framework should seamlessly integrate various analysis steps,
-from data preprocessing to advanced statistical modeling, while adhering 
+is necessary, This framework should seamlessly integrate various analysis 
+steps, from data preprocessing to advanced statistical modeling, while adhering 
 to best practices in data processing and interpretation. This allows the users 
 to clearly and confidently navigate the intricacies of metabolomics data, 
 enabling in-depth scientific investigation and knowledge expansion. 
 
 In this manuscript, a carefully designed computational workflow was developed
 to the analysis of metabolomics data in binary classification studies. 
-The approach encompasses a range of techniques, including uni-variate 
-and multivariate statistical analyses, quality control procedures, 
-and visualization tools, all aimed at deciphering the complex metabolic 
+The approach encompasses a range of techniques, including **univariate** 
+and **multivariate** statistical analyses, **quality control** procedures, 
+and **visualization** tools, all aimed at deciphering the complex metabolic 
 signatures underlying biological phenomena. By providing a structured 
 framework and leveraging state-of-the-art methods enhances the robustness 
 of data analysis in metabolomics.
@@ -43,11 +43,11 @@ in a binary classification study.
 Let's see together the breakdown steps which consists this workflow:
 
 1. **Importing Data**: Start by importing both metabolite and experimental data
-from an Excel sheet. This step ensures you have all the necessary information 
-for your analysis.
+from an Excel sheet. This step ensures you have all needed information 
+for the analysis.
 
 2. **Pooled QC-based Data Cleaning**: Quality control (QC) is important 
-in metabolomics to make ensure that data obtained are reliable. 
+in metabolomics to make sure that data obtained are reliable. 
 Pooled QC samples helps to identify and remove any technical variation 
 or artifacts in the data.
 
@@ -89,14 +89,14 @@ by correction for multiple comparisons if needed.
 summarizing the results of univariate and multivariate analyses
 to Excel sheets for further examination and reporting.
 
-This workflow should provide a well streamilined computational approach
+This workflow should provide a well streamlined computational approach
 to analyzing metabolomics data in a binary classification study,
 integrating both univariate and multivariate statistical methods
 to identify biomarkers and gain insights into biological differences
 between sample groups.
 
 
-```{r include=FALSE}
+```{r sessioninfo}
 library(sessioninfo)
 sessioninfo::session_info()
 ```

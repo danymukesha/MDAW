@@ -23,4 +23,5 @@ Imports:
     sessioninfo,
     tibble
 Roxygen: list(markdown = TRUE)
-URL: https://danymukesha.github.io/MDAW/
+URL: https://danymukesha.github.io/MDAW/, https://github.com/danymukesha/MDAW
+BugReports: https://github.com/danymukesha/MDAW/issues

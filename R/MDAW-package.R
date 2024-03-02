@@ -4,5 +4,6 @@
 ## usethis namespace: start
 #' @import tibble
 #' @import readxl
+#' @import sessioninfo
 ## usethis namespace: end
 NULL

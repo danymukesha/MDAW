@@ -1,0 +1,104 @@
+---
+title: "Introduction to MDAW"
+output: rmarkdown::html_vignette
+vignette: >
+    %\VignetteIndexEntry{Introduction to MDAW}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+    collapse = TRUE,
+    comment = "#>"
+)
+```
+
+In metabolomics studies, the accurate analysis and interpretation
+of complex data sets is of utmost importance in order to gain meaningful 
+biological insights. To address this issue, a robust computational workflow 
+for statistical analysis of both untargeted and targeted metabolomics data 
+is essential. Such a workflow not only ensures the reliability of results, but 
+also promotes reproducibility in data analysis and reporting - `a cornerstone 
+of scientific integrity`. 
+
+In this context, the development of a comprehensive computational framework 
+is essential. This framework should seamlessly integrate various analysis steps,
+from data preprocessing to advanced statistical modeling, while adhering 
+to best practices in data processing and interpretation. This allows the users 
+to clearly and confidently navigate the intricacies of metabolomics data, 
+enabling in-depth scientific investigation and knowledge expansion. 
+
+In this manuscript, a carefully designed computational workflow was developed
+to the analysis of metabolomics data in binary classification studies. 
+The approach encompasses a range of techniques, including uni-variate 
+and multivariate statistical analyses, quality control procedures, 
+and visualization tools, all aimed at deciphering the complex metabolic 
+signatures underlying biological phenomena. By providing a structured 
+framework and leveraging state-of-the-art methods enhances the robustness 
+of data analysis in metabolomics.
+
+Here are the outlines a workflow for analyzing metabolomics data 
+in a binary classification study. 
+Let's see together the breakdown steps which consists this workflow:
+
+1. **Importing Data**: Start by importing both metabolite and experimental data
+from an Excel sheet. This step ensures you have all the necessary information 
+for your analysis.
+
+2. **Pooled QC-based Data Cleaning**: Quality control (QC) is important 
+in metabolomics to make ensure that data obtained are reliable. 
+Pooled QC samples helps to identify and remove any technical variation 
+or artifacts in the data.
+
+3. **Principal Component Analysis (PCA) Visualization**: PCA is a powerful 
+tool for `assessing data quality`, `identifying outliers`, 
+and `gaining insights into the overall structure of the data`. 
+Visualizing the data using PCA plots help us to detect any clustering 
+or separation between sample groups.
+
+4. **Two-Class Univariate Statistics**: Perform uni-variate statistical 
+analysis to identify individual metabolites that show significant differences
+between the two classes (e.g., control vs. treatment). This analysis can
+involve statistical tests such as `t-tests` or `ANOVA`, followed 
+by correction for multiple comparisons if needed.
+
+5. **Multivariate Analysis with PLS-DA**:
+
+    - **Model Optimization (R2 vs. Q2)**: Optimize the PLS-DA model by assessing
+    the goodness of fit (R2) and predictive ability (Q2) using cross-validation
+    techniques.
+
+    - **Permutation Testing**: Validate the PLS-DA model by permutation testing
+    to assess its statistical significance and guard against overfitting.
+
+    - **Model Prediction Metrics**: Evaluate the performance of the PLS-DA model
+    using metrics such as accuracy, sensitivity, specificity, and area under
+    the receiver operating characteristic curve (AUC-ROC).
+
+    - **Feature Importance**: Identify important metabolites contributing
+    to the classification by examining variable importance in projection (VIP)
+    scores or loading plots.
+
+    - **Model Prediction Data Visualizations**: Visualize the results
+    of the PLS-DA model, such as score plots and class prediction plots,
+    to assess the separation between sample groups
+    and the model's predictive ability.
+
+6. **Exporting Statistical Tables**: Export relevant statistical tables
+summarizing the results of univariate and multivariate analyses
+to Excel sheets for further examination and reporting.
+
+This workflow should provide a well streamilined computational approach
+to analyzing metabolomics data in a binary classification study,
+integrating both univariate and multivariate statistical methods
+to identify biomarkers and gain insights into biological differences
+between sample groups.
+
+
+```{r include=FALSE}
+library(sessioninfo)
+sessioninfo::session_info()
+```
+
+

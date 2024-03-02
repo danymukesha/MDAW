@@ -1,15 +1,15 @@
-library(readxl)
-library(tibble)
 library(MDAW)
 
 # The table of Data from an Excel file(data sheet)
 table_data <-
-  readxl::read_xlsx(path = "data-raw/Gastric_NMR.xlsx", sheet = "data") |>
-  as.tibble()
+    MDAW::import_dataXL(xlsx_file_name = "inst/extdata/Gastric_NMR.xlsx",
+        sheet_name = "data")
 
 # The table of Peak from an Excel file(peak sheet)
 table_peak <-
-  MDAW::
+    MDAW::import_dataXL(xlsx_file_name = "inst/extdata/Gastric_NMR.xlsx",
+        sheet_name = "peak")
 
 usethis::use_data(table_data, overwrite = TRUE)
 usethis::use_data(table_peak, overwrite = TRUE)
+

@@ -12,13 +12,16 @@ import_dataXL(xlsx_file_name, sheet_name)
 \item{sheet_name}{A name of indicating the sheet of interest.}
 }
 \value{
-The table of the `tibble` format.
+The table of the \code{tibble} format.
 }
 \description{
-[import_dataXL()] reads sheets from xslx and load them.
+\code{\link[=import_dataXL]{import_dataXL()}} reads sheets from xslx and load them.
 }
 \examples{
-
-import_dataXL("data-raw/Gastric_NMR.xlsx", "data")
+library(MDAW)
+excel_file <- "Gastric_NMR.xlsx"
+path <- system.file("extdata", "Gastric_NMR.xlsx", package = "MDAW")
+MDAW::import_dataXL(xlsx_file_name = path,
+    sheet_name = "data")
 
 }

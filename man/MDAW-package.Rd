@@ -4,9 +4,9 @@
 \name{MDAW-package}
 \alias{MDAW}
 \alias{MDAW-package}
-\title{MDAW: Metabolomic Data Analysis Workflow (MDAW)}
+\title{MDAW: Metabolomic Data Analysis Workflow}
 \description{
-Computational workflow for statistical analysis of untargeted and targeted metabolomics data. This package should facilitate the reprocibility of data analysis and reporting.
+Enhancing Reproducibility: A Computational Workflow for Statistical Analysis of Untargeted and Targeted Metabolomics Data.
 }
 \author{
 \strong{Maintainer}: Dany Mukesha \email{danymukesha@gmail.com} (\href{https://orcid.org/0009-0001-9514-751X}{ORCID})

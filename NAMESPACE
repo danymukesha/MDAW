@@ -2,4 +2,5 @@
 
 export(import_dataXL)
 import(readxl)
+import(sessioninfo)
 import(tibble)

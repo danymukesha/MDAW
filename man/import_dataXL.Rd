@@ -4,15 +4,19 @@
 \alias{import_dataXL}
 \title{Import Data and Peak tables from xslx}
 \usage{
-import_dataXL(xlsx_file_name, sheet_name)
+import_dataXL(xlsx_file_name, sheet_name, interactive_output = FALSE)
 }
 \arguments{
 \item{xlsx_file_name}{A name of excel file.}
 
 \item{sheet_name}{A name of indicating the sheet of interest.}
+
+\item{interactive_output}{Boolean indicating whether to output
+the table in interactive mode using reactable.}
 }
 \value{
-The table of the \code{tibble} format.
+The table of the \code{tibble} format or as a reactable
+if interactive_output is \emph{TRUE}.
 }
 \description{
 \code{\link[=import_dataXL]{import_dataXL()}} reads sheets from xslx and load them.

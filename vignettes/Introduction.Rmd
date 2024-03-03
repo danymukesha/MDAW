@@ -95,12 +95,63 @@ integrating both univariate and multivariate statistical methods
 to identify biomarkers and gain insights into biological differences
 between sample groups.
 
-
+<details>
+<summary>**Session Info**</summary>
 ```{r sessioninfo}
 library(sessioninfo)
 sessioninfo::session_info()
 ```
+</details>
+
+## Libraries
+
+Libraries(or Packages) provide functions that extend the basic functionality 
+of the R language. We will need the following tools to analyse the data:
 
 
+```{r}
+library(MDAW)
+```
 
 
+## Import data/peak
+
+The chunk code below utilises a function called `import_dataXL()` to import
+the Peak and Data sheets from an Excel file. Once this is done, a notification
+appears to confirm that the Peak and Data tables have been loaded
+from the corresponding worksheets in the Excel file.
+
+```{r}
+# Theinput file (Excel spreadsheet)
+excel_file <- "Gastric_NMR.xlsx"
+
+# The path to the input file (Excel spreadsheet)
+path <- system.file("extdata", "Gastric_NMR.xlsx", package = "MDAW")
+
+# The table of Data from an Excel file(data sheet)
+table_data <- MDAW::import_dataXL(xlsx_file_name = path, sheet_name = "data", 
+                                  interactive_output = FALSE)
+
+# The table of Peak from an Excel file(peak sheet)
+table_peak <- MDAW::import_dataXL(xlsx_file_name = path, sheet_name = "peak")
+```
+
+## Load table of data
+
+The data table offers an interactive display feature, allowing to easily 
+inspect and verify the imported values. This functionality can be accessed
+by utilizing the `reactable()` function.
+
+```{r}
+table_data  # View and check the table data 
+```
+
+
+## Load table of peaks
+
+The peak table offers an interactive display feature, allowing to easily 
+inspect and verify the imported values.
+
+```{r}
+table_peak  # View and check the table data 
+```

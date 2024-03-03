@@ -4,8 +4,11 @@
 #'
 #' @param xlsx_file_name A name of excel file.
 #' @param sheet_name A name of indicating the sheet of interest.
+#' @param interactive_output Boolean indicating whether to output
+#' the table in interactive mode using reactable.
 #'
-#' @return The table of the `tibble` format.
+#' @return  The table of the `tibble` format or as a reactable
+#' if interactive_output is *TRUE*.
 #'
 #' @examples
 #' library(MDAW)
@@ -17,7 +20,7 @@
 #' @name import_dataXL
 #'
 #' @export
-import_dataXL <- function(xlsx_file_name, sheet_name) {
+import_dataXL <- function(xlsx_file_name, sheet_name, interactive_output = FALSE) {
     if (!file.exists(xlsx_file_name)) {
         stop(paste(xlsx_file_name, "does not exist."))
     }
@@ -36,5 +39,13 @@ import_dataXL <- function(xlsx_file_name, sheet_name) {
     cat("TOTAL ROWS:", nrow(data), "\n")
     cat("Done!\n")
 
-    return(data)
+    if(interactive_output) {
+        return(reactable::reactable(data,
+                                    defaultSorted = colnames(data[1]),
+                                    searchable = TRUE, minRows = 10,
+                                    paginationType = "simple"
+                                    ))
+    } else {
+        return(data)
+    }
 }

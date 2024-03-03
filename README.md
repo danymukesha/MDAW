@@ -1,6 +1,5 @@
 
-# {MDAW} <br>**M***etabolomic ***D***ata ***A***nalysis ***W***orkflow* <a href="https://danymukesha.github.io/MDAW/"><img src="inst/logos/logo.png"
-align="right" height="139" alt="MDAW website" /></a>
+# {MDAW} **M***etabolomic ***D***ata ***A***nalysis ***W***orkflow*<a href="https://danymukesha.github.io/MDAW/"><img src="inst/logos/logo.png" align="right" height="139" alt="MDAW website" /></a>
 
 ## Getting started
 

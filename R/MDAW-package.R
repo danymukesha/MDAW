@@ -6,5 +6,6 @@
 #' @import readxl
 #' @import reactable
 #' @import sessioninfo
+#' @import dplyr
 ## usethis namespace: end
 NULL

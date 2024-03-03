@@ -4,7 +4,7 @@
 \alias{import_dataXL}
 \title{Import Data and Peak tables from xslx}
 \usage{
-import_dataXL(xlsx_file_name, sheet_name, interactive_output = FALSE)
+import_dataXL(xlsx_file_name, sheet_name = NULL, interactive_output = FALSE)
 }
 \arguments{
 \item{xlsx_file_name}{A name of excel file.}

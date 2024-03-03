@@ -19,6 +19,7 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 Imports: 
+    dplyr,
     reactable,
     readxl,
     sessioninfo,

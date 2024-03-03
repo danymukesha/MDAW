@@ -111,6 +111,7 @@ of the R language. We will need the following tools to analyse the data:
 
 ```{r}
 library(MDAW)
+library(dplyr)
 ```
 
 
@@ -129,11 +130,11 @@ excel_file <- "Gastric_NMR.xlsx"
 path <- system.file("extdata", "Gastric_NMR.xlsx", package = "MDAW")
 
 # The table of Data from an Excel file(data sheet)
-table_data <- MDAW::import_dataXL(xlsx_file_name = path, sheet_name = "data", 
+table_data <- MDAW::import_dataXL(xlsx_file_name = path, sheet_name = "Data", 
                                   interactive_output = FALSE)
 
 # The table of Peak from an Excel file(peak sheet)
-table_peak <- MDAW::import_dataXL(xlsx_file_name = path, sheet_name = "peak")
+table_peak <- MDAW::import_dataXL(xlsx_file_name = path, sheet_name = "Peak")
 ```
 
 ## Load table of data
@@ -155,3 +156,40 @@ inspect and verify the imported values.
 ```{r}
 table_peak  # View and check the table data 
 ```
+
+## Data Cleansing
+
+Before beginning statistical or machine learning modeling, it is important to assess the quality of your data and eliminate any inaccurately measured metabolites. This process ensures the integrity of your analytics. For this demonstration using the gastric cancer NMR data set, basic statistical to measure each metabolite are already calculated, which were then stored in the `table_peak.` In this file, metabolites are stored in compliance with the following conditions:
+
+    - A QC-RSD (Relative Standard Deviation) below 20%.
+    
+    - Fewer than 10% of values are absent.
+    
+```{r}
+# filter clean metabolite from table_peak
+clean_table_peak <-
+  MDAW::clean_table_peak(table = table_peak,
+                         min_QC_RSD = 20,
+                         min_Perc_missing = 20)
+```
+
+## PCA (Principal Component Analysis)
+
+```{r}
+list_of_peaks <- clean_table_peak["Name"]
+table_data |>
+    dplyr::select(RowID, 
+                  Idx, 
+                  SampleID, 
+                  SampleType, 
+                  Class,
+                  list_of_peaks$Name)
+
+matrix_data <- table_data |>
+    dplyr::select(list_of_peaks$Name)
+
+log10(matrix_data)
+
+# missing value imputation (knn - 3 nearest neighbors)
+```
+

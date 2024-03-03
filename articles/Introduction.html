@@ -165,7 +165,8 @@ approach to analyzing metabolomics data in a binary classification
 study, integrating both univariate and multivariate statistical methods
 to identify biomarkers and gain insights into biological differences
 between sample groups.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<details><summary><strong>Session Info</strong>
+</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-lib/sessioninfo#readme" class="external-link">sessioninfo</a></span><span class="op">)</span></span>
 <span><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://r-lib.github.io/sessioninfo/reference/session_info.html" class="external-link">session_info</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────</span></span></span>
@@ -178,7 +179,7 @@ between sample groups.</p>
 <span><span class="co">#&gt;  collate  C.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    C.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2024-03-02</span></span>
+<span><span class="co">#&gt;  date     2024-03-03</span></span>
 <span><span class="co">#&gt;  pandoc   3.1.11 @ /opt/hostedtoolcache/pandoc/3.1.11/x64/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────</span></span></span>
@@ -220,7 +221,96 @@ between sample groups.</p>
 <span><span class="co">#&gt; <span style="color: #555555;"> [3] /opt/R/4.3.3/lib/R/library</span></span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">──────────────────────────────────────────────────────────────────────────────</span></span></span></code></pre></div>
-  </main>
+</details><div class="section level2">
+<h2 id="libraries">Libraries<a class="anchor" aria-label="anchor" href="#libraries"></a>
+</h2>
+<p>Libraries(or Packages) provide functions that extend the basic
+functionality of the R language. We will need the following tools to
+analyse the data:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://danymukesha.github.io/MDAW/">MDAW</a></span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="import-datapeak">Import data/peak<a class="anchor" aria-label="anchor" href="#import-datapeak"></a>
+</h2>
+<p>The chunk code below utilises a function called
+<code><a href="../reference/import_dataXL.html">import_dataXL()</a></code> to import the Peak and Data sheets from an
+Excel file. Once this is done, a notification appears to confirm that
+the Peak and Data tables have been loaded from the corresponding
+worksheets in the Excel file.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Theinput file (Excel spreadsheet)</span></span>
+<span><span class="va">excel_file</span> <span class="op">&lt;-</span> <span class="st">"Gastric_NMR.xlsx"</span></span>
+<span></span>
+<span><span class="co"># The path to the input file (Excel spreadsheet)</span></span>
+<span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Gastric_NMR.xlsx"</span>, package <span class="op">=</span> <span class="st">"MDAW"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># The table of Data from an Excel file(data sheet)</span></span>
+<span><span class="va">table_data</span> <span class="op">&lt;-</span> <span class="fu">MDAW</span><span class="fu">::</span><span class="fu"><a href="../reference/import_dataXL.html">import_dataXL</a></span><span class="op">(</span>xlsx_file_name <span class="op">=</span> <span class="va">path</span>, sheet_name <span class="op">=</span> <span class="st">"data"</span>, </span>
+<span>                                  interactive_output <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading sheet: data </span></span>
+<span><span class="co">#&gt; TOTAL ROWS: 140 </span></span>
+<span><span class="co">#&gt; Done!</span></span>
+<span></span>
+<span><span class="co"># The table of Peak from an Excel file(peak sheet)</span></span>
+<span><span class="va">table_peak</span> <span class="op">&lt;-</span> <span class="fu">MDAW</span><span class="fu">::</span><span class="fu"><a href="../reference/import_dataXL.html">import_dataXL</a></span><span class="op">(</span>xlsx_file_name <span class="op">=</span> <span class="va">path</span>, sheet_name <span class="op">=</span> <span class="st">"peak"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading sheet: peak </span></span>
+<span><span class="co">#&gt; TOTAL ROWS: 129 </span></span>
+<span><span class="co">#&gt; Done!</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="load-table-of-data">Load table of data<a class="anchor" aria-label="anchor" href="#load-table-of-data"></a>
+</h2>
+<p>The data table offers an interactive display feature, allowing to
+easily inspect and verify the imported values. This functionality can be
+accessed by utilizing the <code>reactable()</code> function.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">table_data</span>  <span class="co"># View and check the table data </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 140 × 137</span></span></span>
+<span><span class="co">#&gt;    RowID   Idx `Day of Expt`       Sample_Type    QC Batch Order Sample_id    M1</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1         1 2014-12-08 <span style="color: #949494;">00:00:00</span> QC              1     1     1 sample_1   90.1</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2         2 2014-12-08 <span style="color: #949494;">00:00:00</span> Sample          0     1     2 sample_2   43  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 3         3 2014-12-08 <span style="color: #949494;">00:00:00</span> Sample          0     1     3 sample_3  214. </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 4         4 2014-12-08 <span style="color: #949494;">00:00:00</span> Sample          0     1     4 sample_4   31.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 5         5 2014-12-08 <span style="color: #949494;">00:00:00</span> Sample          0     1     5 sample_5   81.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 6         6 2014-12-08 <span style="color: #949494;">00:00:00</span> Sample          0     1     6 sample_6  197. </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 7         7 2014-12-08 <span style="color: #949494;">00:00:00</span> Sample          0     1     7 sample_7   45.5</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 8         8 2014-12-08 <span style="color: #949494;">00:00:00</span> Sample          0     1     8 sample_8   91  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 9         9 2014-12-08 <span style="color: #949494;">00:00:00</span> Sample          0     1     9 sample_9  481. </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 10       10 2014-12-08 <span style="color: #949494;">00:00:00</span> QC              1     1    10 sample_10  62.2</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 130 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 128 more variables: M2 &lt;dbl&gt;, M3 &lt;dbl&gt;, M4 &lt;dbl&gt;, M5 &lt;dbl&gt;, M6 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M7 &lt;dbl&gt;, M8 &lt;dbl&gt;, M9 &lt;dbl&gt;, M10 &lt;dbl&gt;, M11 &lt;dbl&gt;, M12 &lt;dbl&gt;, M13 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M14 &lt;dbl&gt;, M15 &lt;dbl&gt;, M16 &lt;dbl&gt;, M17 &lt;dbl&gt;, M18 &lt;dbl&gt;, M19 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M20 &lt;dbl&gt;, M21 &lt;dbl&gt;, M22 &lt;dbl&gt;, M23 &lt;dbl&gt;, M24 &lt;dbl&gt;, M25 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M26 &lt;dbl&gt;, M27 &lt;dbl&gt;, M28 &lt;dbl&gt;, M29 &lt;dbl&gt;, M30 &lt;dbl&gt;, M31 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M32 &lt;dbl&gt;, M33 &lt;dbl&gt;, M34 &lt;dbl&gt;, M35 &lt;dbl&gt;, M36 &lt;dbl&gt;, M37 &lt;dbl&gt;, …</span></span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="load-table-of-peaks">Load table of peaks<a class="anchor" aria-label="anchor" href="#load-table-of-peaks"></a>
+</h2>
+<p>The peak table offers an interactive display feature, allowing to
+easily inspect and verify the imported values.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">table_peak</span>  <span class="co"># View and check the table data </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 129 × 4</span></span></span>
+<span><span class="co">#&gt;    RowID   Idx Name  Label                  </span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1         1 M1    1_3-Dimethylurate      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2         2 M2    1_6-Anhydro-β-D-glucose</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 3         3 M3    1_7-Dimethylxanthine   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 4         4 M4    1-Methylnicotinamide   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 5         5 M5    2-Aminoadipate         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 6         6 M6    2-Aminobutyrate        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 7         7 M7    2-Furoylglycine        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 8         8 M8    2-Hydroxyisobutyrate   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 9         9 M9    2-Hydroxyphenylacetate </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 10       10 M10   2-Oxoglutarate         </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 119 more rows</span></span></span></code></pre></div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 

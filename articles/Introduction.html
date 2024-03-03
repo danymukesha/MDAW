@@ -228,7 +228,16 @@ between sample groups.</p>
 functionality of the R language. We will need the following tools to
 analyse the data:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://danymukesha.github.io/MDAW/">MDAW</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://danymukesha.github.io/MDAW/">MDAW</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter, lag</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="import-datapeak">Import data/peak<a class="anchor" aria-label="anchor" href="#import-datapeak"></a>
@@ -246,16 +255,16 @@ worksheets in the Excel file.</p>
 <span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"Gastric_NMR.xlsx"</span>, package <span class="op">=</span> <span class="st">"MDAW"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># The table of Data from an Excel file(data sheet)</span></span>
-<span><span class="va">table_data</span> <span class="op">&lt;-</span> <span class="fu">MDAW</span><span class="fu">::</span><span class="fu"><a href="../reference/import_dataXL.html">import_dataXL</a></span><span class="op">(</span>xlsx_file_name <span class="op">=</span> <span class="va">path</span>, sheet_name <span class="op">=</span> <span class="st">"data"</span>, </span>
+<span><span class="va">table_data</span> <span class="op">&lt;-</span> <span class="fu">MDAW</span><span class="fu">::</span><span class="fu"><a href="../reference/import_dataXL.html">import_dataXL</a></span><span class="op">(</span>xlsx_file_name <span class="op">=</span> <span class="va">path</span>, sheet_name <span class="op">=</span> <span class="st">"Data"</span>, </span>
 <span>                                  interactive_output <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading sheet: data </span></span>
+<span><span class="co">#&gt; Loading sheet: Data </span></span>
 <span><span class="co">#&gt; TOTAL ROWS: 140 </span></span>
 <span><span class="co">#&gt; Done!</span></span>
 <span></span>
 <span><span class="co"># The table of Peak from an Excel file(peak sheet)</span></span>
-<span><span class="va">table_peak</span> <span class="op">&lt;-</span> <span class="fu">MDAW</span><span class="fu">::</span><span class="fu"><a href="../reference/import_dataXL.html">import_dataXL</a></span><span class="op">(</span>xlsx_file_name <span class="op">=</span> <span class="va">path</span>, sheet_name <span class="op">=</span> <span class="st">"peak"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading sheet: peak </span></span>
-<span><span class="co">#&gt; TOTAL ROWS: 129 </span></span>
+<span><span class="va">table_peak</span> <span class="op">&lt;-</span> <span class="fu">MDAW</span><span class="fu">::</span><span class="fu"><a href="../reference/import_dataXL.html">import_dataXL</a></span><span class="op">(</span>xlsx_file_name <span class="op">=</span> <span class="va">path</span>, sheet_name <span class="op">=</span> <span class="st">"Peak"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Loading sheet: Peak </span></span>
+<span><span class="co">#&gt; TOTAL ROWS: 149 </span></span>
 <span><span class="co">#&gt; Done!</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -266,26 +275,26 @@ easily inspect and verify the imported values. This functionality can be
 accessed by utilizing the <code>reactable()</code> function.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">table_data</span>  <span class="co"># View and check the table data </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 140 × 137</span></span></span>
-<span><span class="co">#&gt;    RowID   Idx `Day of Expt`       Sample_Type    QC Batch Order Sample_id    M1</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1         1 2014-12-08 <span style="color: #949494;">00:00:00</span> QC              1     1     1 sample_1   90.1</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2         2 2014-12-08 <span style="color: #949494;">00:00:00</span> Sample          0     1     2 sample_2   43  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 3         3 2014-12-08 <span style="color: #949494;">00:00:00</span> Sample          0     1     3 sample_3  214. </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 4         4 2014-12-08 <span style="color: #949494;">00:00:00</span> Sample          0     1     4 sample_4   31.6</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 5         5 2014-12-08 <span style="color: #949494;">00:00:00</span> Sample          0     1     5 sample_5   81.9</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 6         6 2014-12-08 <span style="color: #949494;">00:00:00</span> Sample          0     1     6 sample_6  197. </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 7         7 2014-12-08 <span style="color: #949494;">00:00:00</span> Sample          0     1     7 sample_7   45.5</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 8         8 2014-12-08 <span style="color: #949494;">00:00:00</span> Sample          0     1     8 sample_8   91  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 9         9 2014-12-08 <span style="color: #949494;">00:00:00</span> Sample          0     1     9 sample_9  481. </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 10       10 2014-12-08 <span style="color: #949494;">00:00:00</span> QC              1     1    10 sample_10  62.2</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 140 × 154</span></span></span>
+<span><span class="co">#&gt;    RowID   Idx SampleID  SampleType Class    M1      M2    M3    M4    M5    M6</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1         1 sample_1  QC         QC     90.1   492.  203.   35   164.   19.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2         2 sample_2  Sample     GC     43     526.  130.   <span style="color: #BB0000;">NA</span>   694.  114. </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 3         3 sample_3  Sample     BN    214.  <span style="text-decoration: underline;">10</span>703.  105.   46.8 483.  152. </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 4         4 sample_4  Sample     HE     31.6    59.7  86.4  14    88.6  10.3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 5         5 sample_5  Sample     GC     81.9   259.  315.    8.7 243.   18.4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 6         6 sample_6  Sample     BN    197.    128.  862.   18.7 200.    4.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 7         7 sample_7  Sample     GC     45.5   190.   32    <span style="color: #BB0000;">NA</span>   363.   35.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 8         8 sample_8  Sample     HE     91     232.  212.   18.2  72.5   6.7</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 9         9 sample_9  Sample     GC    481.    470.   60.7   8.4 270.   57.4</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 10       10 sample_10 QC         QC     62.2   182.   75.5  36   203.   18.7</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 130 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 128 more variables: M2 &lt;dbl&gt;, M3 &lt;dbl&gt;, M4 &lt;dbl&gt;, M5 &lt;dbl&gt;, M6 &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   M7 &lt;dbl&gt;, M8 &lt;dbl&gt;, M9 &lt;dbl&gt;, M10 &lt;dbl&gt;, M11 &lt;dbl&gt;, M12 &lt;dbl&gt;, M13 &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   M14 &lt;dbl&gt;, M15 &lt;dbl&gt;, M16 &lt;dbl&gt;, M17 &lt;dbl&gt;, M18 &lt;dbl&gt;, M19 &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   M20 &lt;dbl&gt;, M21 &lt;dbl&gt;, M22 &lt;dbl&gt;, M23 &lt;dbl&gt;, M24 &lt;dbl&gt;, M25 &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   M26 &lt;dbl&gt;, M27 &lt;dbl&gt;, M28 &lt;dbl&gt;, M29 &lt;dbl&gt;, M30 &lt;dbl&gt;, M31 &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   M32 &lt;dbl&gt;, M33 &lt;dbl&gt;, M34 &lt;dbl&gt;, M35 &lt;dbl&gt;, M36 &lt;dbl&gt;, M37 &lt;dbl&gt;, …</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 143 more variables: M7 &lt;dbl&gt;, M8 &lt;dbl&gt;, M9 &lt;dbl&gt;, M10 &lt;dbl&gt;, M11 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M12 &lt;dbl&gt;, M13 &lt;dbl&gt;, M14 &lt;dbl&gt;, M15 &lt;dbl&gt;, M16 &lt;dbl&gt;, M17 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M18 &lt;dbl&gt;, M19 &lt;dbl&gt;, M20 &lt;dbl&gt;, M21 &lt;dbl&gt;, M22 &lt;dbl&gt;, M23 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M24 &lt;dbl&gt;, M25 &lt;dbl&gt;, M26 &lt;dbl&gt;, M27 &lt;dbl&gt;, M28 &lt;dbl&gt;, M29 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M30 &lt;dbl&gt;, M31 &lt;dbl&gt;, M32 &lt;dbl&gt;, M33 &lt;dbl&gt;, M34 &lt;dbl&gt;, M35 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M36 &lt;dbl&gt;, M37 &lt;dbl&gt;, M38 &lt;dbl&gt;, M39 &lt;dbl&gt;, M40 &lt;dbl&gt;, M41 &lt;dbl&gt;, …</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="load-table-of-peaks">Load table of peaks<a class="anchor" aria-label="anchor" href="#load-table-of-peaks"></a>
@@ -294,20 +303,102 @@ accessed by utilizing the <code>reactable()</code> function.</p>
 easily inspect and verify the imported values.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">table_peak</span>  <span class="co"># View and check the table data </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 129 × 4</span></span></span>
-<span><span class="co">#&gt;    RowID   Idx Name  Label                  </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1         1 M1    1_3-Dimethylurate      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2         2 M2    1_6-Anhydro-β-D-glucose</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 3         3 M3    1_7-Dimethylxanthine   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 4         4 M4    1-Methylnicotinamide   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 5         5 M5    2-Aminoadipate         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 6         6 M6    2-Aminobutyrate        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 7         7 M7    2-Furoylglycine        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 8         8 M8    2-Hydroxyisobutyrate   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 9         9 M9    2-Hydroxyphenylacetate </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 10       10 M10   2-Oxoglutarate         </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 119 more rows</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 149 × 6</span></span></span>
+<span><span class="co">#&gt;    RowID   Idx Name  Label                   Perc_missing QC_RSD</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1         1 M1    1_3-Dimethylurate             11.4    32.2 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2         2 M2    1_6-Anhydro-β-D-glucose        0.714  31.2 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 3         3 M3    1_7-Dimethylxanthine           5      35.0 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 4         4 M4    1-Methylnicotinamide           8.57   12.8 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 5         5 M5    2-Aminoadipate                 1.43    9.37</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 6         6 M6    2-Aminobutyrate                5      47.0 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 7         7 M7    2-Furoylglycine                2.86    5.05</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 8         8 M8    2-Hydroxyisobutyrate           0       5.13</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 9         9 M9    2-Hydroxyphenylacetate        19.3    28.7 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 10       10 M10   2-Oxoglutarate                 7.86   33.1 </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 139 more rows</span></span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="data-cleansing">Data Cleansing<a class="anchor" aria-label="anchor" href="#data-cleansing"></a>
+</h2>
+<p>Before beginning statistical or machine learning modeling, it is
+important to assess the quality of your data and eliminate any
+inaccurately measured metabolites. This process ensures the integrity of
+your analytics. For this demonstration using the gastric cancer NMR data
+set, basic statistical to measure each metabolite are already
+calculated, which were then stored in the <code>table_peak.</code> In
+this file, metabolites are stored in compliance with the following
+conditions:</p>
+<pre><code>- A QC-RSD (Relative Standard Deviation) below 20%.
+
+- Fewer than 10% of values are absent.</code></pre>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># filter clean metabolite from table_peak</span></span>
+<span><span class="va">clean_table_peak</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">MDAW</span><span class="fu">::</span><span class="fu"><a href="../reference/clean_table_peak.html">clean_table_peak</a></span><span class="op">(</span>table <span class="op">=</span> <span class="va">table_peak</span>,</span>
+<span>                         min_QC_RSD <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>                         min_Perc_missing <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 52 remaining peaks.</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="pca-principal-component-analysis">PCA (Principal Component Analysis)<a class="anchor" aria-label="anchor" href="#pca-principal-component-analysis"></a>
+</h2>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">list_of_peaks</span> <span class="op">&lt;-</span> <span class="va">clean_table_peak</span><span class="op">[</span><span class="st">"Name"</span><span class="op">]</span></span>
+<span><span class="va">table_data</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">RowID</span>, </span>
+<span>                  <span class="va">Idx</span>, </span>
+<span>                  <span class="va">SampleID</span>, </span>
+<span>                  <span class="va">SampleType</span>, </span>
+<span>                  <span class="va">Class</span>,</span>
+<span>                  <span class="va">list_of_peaks</span><span class="op">$</span><span class="va">Name</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 140 × 57</span></span></span>
+<span><span class="co">#&gt;    RowID   Idx SampleID  SampleType Class    M4    M5    M7    M8    M11   M14</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 1         1 sample_1  QC         QC     35   164.   41    46.5   61.7  35.3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 2         2 sample_2  Sample     GC     <span style="color: #BB0000;">NA</span>   694.   37.9 126.   491.   <span style="color: #BB0000;">NA</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 3         3 sample_3  Sample     BN     46.8 483.  110.   85.1 <span style="text-decoration: underline;">2</span>441.   29.3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 4         4 sample_4  Sample     HE     14    88.6 170.   23.9  141.   62.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 5         5 sample_5  Sample     GC      8.7 243.  349.   61.1   48.7  77.8</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 6         6 sample_6  Sample     BN     18.7 200.   37.3 244.   104.   52.3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 7         7 sample_7  Sample     GC     <span style="color: #BB0000;">NA</span>   363.   59.6  51.3   58.1  34.6</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 8         8 sample_8  Sample     HE     18.2  72.5  15.3  37.1   54.1  30.3</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 9         9 sample_9  Sample     GC      8.4 270.  214.   65.6   92.9  61.9</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 10       10 sample_10 QC         QC     36   203.   44.4  48.6   59    28.4</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 130 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 46 more variables: M15 &lt;dbl&gt;, M25 &lt;dbl&gt;, M26 &lt;dbl&gt;, M31 &lt;dbl&gt;, M32 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M33 &lt;dbl&gt;, M36 &lt;dbl&gt;, M37 &lt;dbl&gt;, M45 &lt;dbl&gt;, M48 &lt;dbl&gt;, M50 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M51 &lt;dbl&gt;, M65 &lt;dbl&gt;, M66 &lt;dbl&gt;, M68 &lt;dbl&gt;, M71 &lt;dbl&gt;, M73 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M74 &lt;dbl&gt;, M75 &lt;dbl&gt;, M88 &lt;dbl&gt;, M89 &lt;dbl&gt;, M90 &lt;dbl&gt;, M91 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M93 &lt;dbl&gt;, M101 &lt;dbl&gt;, M104 &lt;dbl&gt;, M105 &lt;dbl&gt;, M106 &lt;dbl&gt;, M107 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M110 &lt;dbl&gt;, M115 &lt;dbl&gt;, M116 &lt;dbl&gt;, M118 &lt;dbl&gt;, M119 &lt;dbl&gt;, M120 &lt;dbl&gt;, …</span></span></span>
+<span></span>
+<span><span class="va">matrix_data</span> <span class="op">&lt;-</span> <span class="va">table_data</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">list_of_peaks</span><span class="op">$</span><span class="va">Name</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log10</a></span><span class="op">(</span><span class="va">matrix_data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 140 × 52</span></span></span>
+<span><span class="co">#&gt;        M4    M5    M7    M8   M11   M14   M15   M25   M26    M31   M32   M33</span></span>
+<span><span class="co">#&gt;     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>  1.54   2.22  1.61  1.67  1.79  1.55  1.46 1.33   1.22  1.28   1.99  2.44</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> <span style="color: #BB0000;">NA</span>      2.84  1.58  2.10  2.69 <span style="color: #BB0000;">NA</span>     2.32 1.45   1.68  3.13   2.79  2.89</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>  1.67   2.68  2.04  1.93  3.39  1.47  1.66 1.55   1.43 -<span style="color: #BB0000;">0.699</span>  2.56  2.73</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>  1.15   1.95  2.23  1.38  2.15  1.80  1.58 1.42   1.01  0.681  2.05  2.13</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>  0.940  2.39  2.54  1.79  1.69  1.89  1.71 1.77   1.82  1.05   2.37  2.52</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>  1.27   2.30  1.57  2.39  2.02  1.72  1.89 1.46   1.31  2.05   1.88  2.47</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> <span style="color: #BB0000;">NA</span>      2.56  1.78  1.71  1.76  1.54  1.76 1.76   1.73  1.42   2.09  2.43</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>  1.26   1.86  1.18  1.57  1.73  1.48  1.28 0.820  1.47  0.996  1.59  2.40</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>  0.924  2.43  2.33  1.82  1.97  1.79  1.73 1.60   1.32  1.83   2.65  2.51</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>  1.56   2.31  1.65  1.69  1.77  1.45  1.47 1.42   1.19  1.31   1.98  2.53</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 130 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 40 more variables: M36 &lt;dbl&gt;, M37 &lt;dbl&gt;, M45 &lt;dbl&gt;, M48 &lt;dbl&gt;, M50 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M51 &lt;dbl&gt;, M65 &lt;dbl&gt;, M66 &lt;dbl&gt;, M68 &lt;dbl&gt;, M71 &lt;dbl&gt;, M73 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M74 &lt;dbl&gt;, M75 &lt;dbl&gt;, M88 &lt;dbl&gt;, M89 &lt;dbl&gt;, M90 &lt;dbl&gt;, M91 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M93 &lt;dbl&gt;, M101 &lt;dbl&gt;, M104 &lt;dbl&gt;, M105 &lt;dbl&gt;, M106 &lt;dbl&gt;, M107 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M110 &lt;dbl&gt;, M115 &lt;dbl&gt;, M116 &lt;dbl&gt;, M118 &lt;dbl&gt;, M119 &lt;dbl&gt;, M120 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   M122 &lt;dbl&gt;, M126 &lt;dbl&gt;, M129 &lt;dbl&gt;, M130 &lt;dbl&gt;, M134 &lt;dbl&gt;, M137 &lt;dbl&gt;, …</span></span></span>
+<span></span>
+<span><span class="co"># missing value imputation (knn - 3 nearest neighbors)</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

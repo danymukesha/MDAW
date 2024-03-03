@@ -11,7 +11,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# {MDAW} <br>**M***etabolomic ***D***ata ***A***nalysis ***W***orkflow* <a href="https://danymukesha.github.io/MDAW/"><img src="man/figures/logo.png"
+# {MDAW} <br>**M***etabolomic ***D***ata ***A***nalysis ***W***orkflow* <a href="https://danymukesha.github.io/MDAW/"><img src="inst/logos/logo.png"
 align="right" height="139" alt="MDAW website" /></a>
 
 ## Getting started

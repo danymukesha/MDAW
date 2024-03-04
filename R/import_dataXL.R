@@ -20,6 +20,7 @@
 #' @name import_dataXL
 #'
 #' @export
+#'
 import_dataXL <- function(xlsx_file_name, sheet_name = NULL, interactive_output = FALSE) {
     if (!file.exists(xlsx_file_name)) {
         stop(paste(xlsx_file_name, "does not exist."))

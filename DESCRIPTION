@@ -23,7 +23,11 @@ Imports:
     reactable,
     readxl,
     sessioninfo,
-    tibble
-Roxygen: list(markdown = TRUE)
+    tibble,
+    ggplot2,
+    plotly,
+    stats,
+    purrr,
+    factoextra
 URL: https://danymukesha.github.io/MDAW/, https://github.com/danymukesha/MDAW
 BugReports: https://github.com/danymukesha/MDAW/issues

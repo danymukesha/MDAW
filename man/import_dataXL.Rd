@@ -15,11 +15,11 @@ import_dataXL(xlsx_file_name, sheet_name = NULL, interactive_output = FALSE)
 the table in interactive mode using reactable.}
 }
 \value{
-The table of the \code{tibble} format or as a reactable
-if interactive_output is \emph{TRUE}.
+The table of the `tibble` format or as a reactable
+if interactive_output is *TRUE*.
 }
 \description{
-\code{\link[=import_dataXL]{import_dataXL()}} reads sheets from xslx and load them.
+[import_dataXL()] reads sheets from xslx and load them.
 }
 \examples{
 library(MDAW)

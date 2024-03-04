@@ -7,5 +7,6 @@
 #' @import reactable
 #' @import sessioninfo
 #' @import dplyr
+#' @rawNamespace import(ggplot2, except = last_plot)
 ## usethis namespace: end
 NULL

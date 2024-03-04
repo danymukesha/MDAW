@@ -3,25 +3,25 @@
 \docType{data}
 \name{table_data}
 \alias{table_data}
-\title{Metabolite \code{Data} with the Interactive Table}
+\title{Metabolite `Data` with the Interactive Table}
 \format{
-\code{table_data} This table encompasses 140 samples and 149 metabolites;
+`table_data` This table encompasses 140 samples and 149 metabolites;
 in a data frame with 140 rows and 149 columns:
 \describe{
-\item{RowID}{The \code{RowID} column represents row id of the sample}
-\item{Idx}{The \code{idX} column represents index of the sample}
-\item{Day of Expt}{The \verb{Day of Expt} column represents data of extraction
-for the sample}
-\item{SampleType}{The \code{SampleType} column specifies whether
-the sample pertains to a pooled quality control (QC) sample
-or a study sample.}
-\item{QC}{The \code{QC} column identified the Quality Control sample \cr
-(if QC==1 the sample is for quality control, if QC is 0
-the the sample is not a quality control.)}
-\item{Class}{The \code{Class} column denotes the clinical outcome
-observed for each individual, with abbreviations representing
-different conditions: "GC" for Gastric Cancer, "BN" for Benign Tumor,
-and "HE" for Healthy Control.}
+  \item{RowID}{The `RowID` column represents row id of the sample}
+  \item{Idx}{The `idX` column represents index of the sample}
+  \item{Day of Expt}{The `Day of Expt` column represents data of extraction
+  for the sample}
+  \item{SampleType}{The `SampleType` column specifies whether
+  the sample pertains to a pooled quality control (QC) sample
+  or a study sample.}
+  \item{QC}{The `QC` column identified the Quality Control sample \cr
+  (if QC==1 the sample is for quality control, if QC is 0
+  the the sample is not a quality control.)}
+  \item{Class}{The `Class` column denotes the clinical outcome
+   observed for each individual, with abbreviations representing
+    different conditions: "GC" for Gastric Cancer, "BN" for Benign Tumor,
+     and "HE" for Healthy Control.}
 }
 }
 \source{

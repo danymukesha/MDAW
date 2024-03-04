@@ -18,13 +18,15 @@ information including QC_min_QC_RSD and min_Perc_missing.}
 A data frame containing only clean metabolites.
 }
 \description{
-\code{clean_table_peak} filters clean metabolites from the provided
+`clean_table_peak` filters clean metabolites from the provided
 table_peak based on criteria, such as missing values and
 standard deviation of peaks.
 }
 \examples{
 library(MDAW)
 peaks <- MDAW::table_peak
-clean_metabolites <- clean_table_peak(peaks)
+clean_metabolites <-   MDAW::clean_table_peak(table = table_peak,
+    min_QC_RSD = 20,
+    min_Perc_missing = 20)
 
 }

@@ -1,6 +1,19 @@
 ---
 title: "Introduction to MDAW"
-output: rmarkdown::html_vignette
+author:
+- name: Dany Mukesha
+  affiliation: "University of Cote D'Azur"
+  email: danymukesha@gmail.com
+package: MDAW
+output:
+  html_document
+abstract:
+    Metabolomics, the study of small molecules or metabolites within biological
+    systems, has emerged as a powerful tool for understanding the intricate
+    metabolic processes underlying various physiological and pathological
+    conditions. However, the analysis of metabolomics data presents unique 
+    challenges due to its complexity and high dimensionality.
+    
 vignette: >
     %\VignetteIndexEntry{Introduction to MDAW}
     %\VignetteEngine{knitr::rmarkdown}
@@ -14,29 +27,42 @@ knitr::opts_chunk$set(
 )
 ```
 
+
+<br>
+
+# Introduction
+
 In metabolomics studies, the accurate analysis and interpretation
-of complex data sets is of utmost importance in order to obtain meaningful 
+of complex data sets is of utmost importance in order to obtain meaningful
 biological insights. To address this issue, a robust computational workflow 
 for statistical analysis of both untargeted and targeted metabolomics data 
-is essential. Such a workflow not only ensures the reliability of results, but 
-also promotes reproducibility in data analysis and reporting - `a fundamental
-principle for scientific integrity` (Resnik DB. et al., 2016). 
+is essential. Such a workflow not only ensures the reliability of results, 
+but also promotes reproducibility in data analysis and reporting 
+- `a fundamental principle for scientific integrity` 
+(Resnik DB. et al., 2016). 
 
-In this context, the development of a comprehensive computational framework 
+In this context, the development of a comprehensive computational framework
 is necessary, This framework should seamlessly integrate various analysis 
-steps, from data preprocessing to advanced statistical modeling, while adhering 
-to best practices in data processing and interpretation. This allows the users 
-to clearly and confidently navigate the intricacies of metabolomics data, 
-enabling in-depth scientific investigation and knowledge expansion. 
+steps, from data preprocessing to advanced statistical modeling, while 
+adhering to best practices in data processing and interpretation. 
+This allows the users to clearly and confidently navigate the intricacies 
+of metabolomics data, enabling in-depth scientific investigation 
+and knowledge expansion. 
 
-In this manuscript, a carefully designed computational workflow was developed
-to the analysis of metabolomics data in binary classification studies. 
+This manuscript provides a designed computational workflow developed
+for the analysis of metabolomics data in binary classification studies. 
 The approach encompasses a range of techniques, including **univariate** 
 and **multivariate** statistical analyses, **quality control** procedures, 
 and **visualization** tools, all aimed at deciphering the complex metabolic 
 signatures underlying biological phenomena. By providing a structured 
 framework and leveraging state-of-the-art methods enhances the robustness 
 of data analysis in metabolomics.
+
+# Outlines
+
+This framework aims integrate various analysis steps, from data preprocessing 
+to advanced statistical modeling, while adhering to best practices in data
+processing and interpretation. 
 
 Here are the outlines for `MDAW`, a workflow for analyzing metabolomics data, 
 in a binary classification study. 
@@ -95,13 +121,7 @@ integrating both univariate and multivariate statistical methods
 to identify biomarkers and gain insights into biological differences
 between sample groups.
 
-<details>
-<summary>**Session Info**</summary>
-```{r sessioninfo}
-library(sessioninfo)
-sessioninfo::session_info()
-```
-</details>
+# Case Study
 
 ## Libraries
 
@@ -109,11 +129,13 @@ Libraries(or Packages) provide functions that extend the basic functionality
 of the R language. We will need the following tools to analyse the data:
 
 
-```{r}
+```{r setup, message=FALSE, warning=FALSE}
 library(MDAW)
 library(dplyr)
+library(ggplot2)
+library(reactable)
+library(sessioninfo)
 ```
-
 
 ## Import data/peak
 
@@ -154,7 +176,8 @@ The peak table offers an interactive display feature, allowing to easily
 inspect and verify the imported values.
 
 ```{r}
-table_peak  # View and check the table data 
+table_peak |>
+  reactable::reactable() # View and check the table peak 
 ```
 
 ## Data Cleansing
@@ -167,29 +190,203 @@ Before beginning statistical or machine learning modeling, it is important to as
     
 ```{r}
 # filter clean metabolite from table_peak
-clean_table_peak <-
-  MDAW::clean_table_peak(table = table_peak,
+clean_table_peak <- MDAW::clean_table_peak(table = table_peak,
                          min_QC_RSD = 20,
                          min_Perc_missing = 20)
 ```
+
 
 ## PCA (Principal Component Analysis)
 
 ```{r}
 list_of_peaks <- clean_table_peak["Name"]
 table_data |>
-    dplyr::select(RowID, 
-                  Idx, 
-                  SampleID, 
-                  SampleType, 
-                  Class,
-                  list_of_peaks$Name)
+  dplyr::select(RowID,
+                Idx,
+                SampleID,
+                SampleType,
+                Class,
+                list_of_peaks$Name)
 
-matrix_data <- table_data |>
-    dplyr::select(list_of_peaks$Name)
-
-log10(matrix_data)
-
-# missing value imputation (knn - 3 nearest neighbors)
 ```
 
+```{r}
+data <- table_data |>
+    select(-c(1:5))
+categories <- table_data |>
+    select(c(4:5))
+
+#Imputate missing values with knn
+imputed_data <- data |>
+  as.matrix() |>
+  impute::impute.knn()
+
+# Step 2: Perform PCA
+pca_result <- prcomp(imputed_data$data, scale. = TRUE)
+
+pca_scores <- as.data.frame(pca_result$x)
+
+# Combine PCA scores with categories for coloring
+pca_data <- cbind(pca_scores, categories)
+pca_plot <-  ggplot2::ggplot(pca_data, 
+                 ggplot2::aes(x = PC1, y = PC2, 
+                              color = SampleType, 
+                              shape = Class)) +
+  ggplot2::geom_point(size = 2) +
+  ggplot2::scale_color_manual(values = c("blue", "red")) + 
+  ggplot2::scale_shape_manual(values = c(16, 17, 18, 19)) +
+  ggplot2::theme_bw() +
+  ggplot2::labs(title = "Normal PCA Plot", x = "PC1", y = "PC2")
+
+pca_plot
+```
+
+
+```{r warning=FALSE}
+pca_plot <- MDAW::pca_interaction_plot(data = data, 
+                                       categories = categories)
+pca_plot
+```
+```{r}
+table_data_2Class <- table_data |>
+  dplyr::filter(Class == c("HE", "GC"))
+# Reduce data table only to GC and HE class members
+pos_outcome <- "GC" 
+
+# Calculate basic statistics and create a statistics table.
+statsTable <- MDAW::univariate_2class(DataTable = table_data_2Class, 
+                  PeakTable = clean_table_peak, 
+                  group = 'Class',
+                  posclass = pos_outcome,         
+                  parametric = TRUE)
+
+```
+
+
+```{r}
+statsTable |> 
+  reactable::reactable()
+```
+
+
+## Statistical Formulas
+
+### Mean and Standard Deviation
+
+The mean (\( \bar{x} \)) and standard deviation (\( \sigma \)) are calculated for each group:
+
+Mean:
+\[ \bar{x} = \frac{\sum_{i=1}^{n} x_i}{n} \]
+
+Standard Deviation:
+\[ \sigma = \sqrt{\frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n - 1}} \]
+
+*Example:*
+
+Suppose we have a dataset: [12, 15, 18, 20, 25]
+
+    1. Calculate the mean: 
+    \[ \bar{x} = \frac{12 + 15 + 18 + 20 + 25}{5} = \frac{90}{5} = 18 \]
+    2. Calculate the standard deviation:
+    \[ \sigma = \sqrt{\frac{(12-18)^2 + (15-18)^2 + (18-18)^2 + (20-18)^2 + (25-18)^2}{5-1}} \]
+    \[ \sigma = \sqrt{\frac{36 + 9 + 0 + 4 + 49}{4}} = \sqrt{\frac{98}{4}} \approx \sqrt{24.5} \approx 4.95 \]
+    
+
+
+### Confidence Interval
+
+The 95% confidence interval for the mean is calculated using the standard error (\( SE \)):
+
+\[ \text{CI} = \bar{x} \pm (1.96 \times SE) \]
+
+Where,
+\[ SE = \frac{\sigma}{\sqrt{n}} \]
+
+**Example:**
+
+Using the previous example where \( \bar{x} = 18 \) and \( \sigma \approx 4.95 \), and assuming a sample size of \( n = 5 \):
+\[ SE = \frac{4.95}{\sqrt{5}} \approx 2.21 \]
+\[ \text{CI} = 18 \pm (1.96 \times 2.21) \approx (13.66, 22.34) \]
+
+
+### T-test
+
+The t-test statistic is calculated to compare means between groups.
+
+The formula for the t-test statistic depends on whether the variances are assumed to be equal or unequal.
+
+*Example:*
+
+Suppose we have two groups with sample means \( \bar{x}_1 = 18 \) and \( \bar{x}_2 = 20 \), and assuming equal variances:
+\[ t = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}} \]
+
+Where \( s_1 \) and \( s_2 \) are the sample standard deviations, and \( n_1 \) and \( n_2 \) are the sample sizes.
+
+### Median and Bootstrap CI
+
+The median and its 95% bootstrap confidence interval are calculated for each group.
+
+*Example:*
+
+Suppose we have a dataset: [12, 15, 18, 20, 25]
+
+    1. Calculate the median: Since the dataset has an odd number of observations, the median is the middle value, which is 18.
+    2. Calculate the bootstrap confidence interval: This involves resampling the dataset with replacement, calculating the median for each resampled dataset, and then finding the 2.5th and 97.5th percentiles of the medians.
+
+### Mann-Whitney U Test
+
+The Mann-Whitney U test is used to compare medians between groups.
+
+*Example:*
+
+Suppose we have two groups with observations:
+
+    - Group 1: [12, 15, 18, 20, 25]
+    - Group 2: [10, 14, 16, 19, 22]
+
+        1. Rank all the observations together.
+        2. Calculate the sum of ranks for each group.
+        3. Calculate the U statistic for each group.
+        4. Use the U statistics to determine if there is a significant difference
+        between the groups.
+
+
+### Shapiro-Wilk Test
+
+The Shapiro-Wilk test is performed to assess the normality 
+of data distribution.
+
+
+*Example:*
+
+Suppose we have a dataset: [12, 15, 18, 20, 25]
+
+    1. Perform the Shapiro-Wilk test using statistical software or R functions.
+    2. Obtain the test statistic and p-value.
+    3. If the p-value is less than the significance level (e.g., 0.05), reject
+    the null hypothesis and conclude that the data is not normally distributed.
+
+### Levene’s Test
+Levene’s test is used to assess the equality of variances between groups.
+
+*Example:*
+
+Suppose we have two groups with observations:
+Group 1: [12, 15, 18, 20, 25]
+Group 2: [10, 14, 16, 19, 22]
+
+    1. Calculate the absolute deviations from the group means.
+    2. Calculate the mean of the absolute deviations for each group.
+    3. Use these means to calculate the Levene statistic.
+    4. Compare the Levene statistic to a critical value from the F-distribution
+    to determine if the variances are significantly different.Sure, 
+    let's provide full and complete formulas for each statistical method 
+    along with examples and their resolving procedures.
+
+
+<details>
+<summary>**Session Info**</summary>
+```{r sessioninfo}
+sessioninfo::session_info()
+```
+</details>

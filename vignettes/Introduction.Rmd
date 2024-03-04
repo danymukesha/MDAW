@@ -138,7 +138,7 @@ library(sessioninfo)
 
 ## Import data/peak
 
-The chunk code below utilises a function called `import_dataXL()` to
+The chunk code below utilises a function called `MDAW::import_dataXL()` to
 import the Peak and Data sheets from an Excel file. Once this is done, a
 notification appears to confirm that the Peak and Data tables have been
 loaded from the corresponding worksheets in the Excel file.
@@ -162,7 +162,7 @@ table_peak <- MDAW::import_dataXL(xlsx_file_name = path, sheet_name = "Peak")
 
 The data table offers an interactive display feature, allowing to easily
 inspect and verify the imported values. This functionality can be
-accessed by utilizing the `reactable()` function.
+accessed by utilizing the `reactable::reactable()` function.
 
 ```{r}
 table_data  # View and check the table data 
@@ -185,7 +185,7 @@ important to assess the quality of your data and eliminate any
 inaccurately measured metabolites. This process ensures the integrity of
 your analytics. For this demonstration using the gastric cancer NMR data
 set, basic statistical to measure each metabolite are already
-calculated, which were then stored in the `table_peak.` In this file,
+calculated, which were then stored in the `MDAW::table_peak`. In this file,
 metabolites are stored in compliance with the following conditions:
 
 -   A QC-RSD (Relative Standard Deviation) below 20%.
@@ -209,7 +209,7 @@ datasets of high quality, QC samples tend to cluster closely together
 compared to biological samples, as discussed by Broadhurst et al. in
 2018.
 
-Initially, the metabolite data matrix is extracted from the `table_data`
+Initially, the metabolite data matrix is extracted from the `MDAW::table_data`
 and subjected to transformation and scaling:
 
 1.  A new variable, peaklist, is generated to store the names (M1...Mn)

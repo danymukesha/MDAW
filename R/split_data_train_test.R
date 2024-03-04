@@ -29,8 +29,9 @@ split_data_train_test <- function(data, split_ratio, seed = NULL) {
 
   set.seed(seed)
   n <- nrow(data)
-  train_indices <- caret::createDataPartition(y = NULL, times = 1,
-                                              p = split_ratio, list = FALSE)
+  train_indices <- caret::createDataPartition(y = data, times = 1,
+                                              p = split_ratio,
+                                              list = FALSE)
   train <- data[train_indices, ]
   test <- data[-train_indices, ]
 

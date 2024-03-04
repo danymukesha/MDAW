@@ -34,9 +34,18 @@
     <loc>https://danymukesha.github.io/MDAW/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://danymukesha.github.io/MDAW/reference/pca_interaction_plot.html</loc>
+  </url>
+  <url>
+    <loc>https://danymukesha.github.io/MDAW/reference/scale_data.html</loc>
+  </url>
+  <url>
     <loc>https://danymukesha.github.io/MDAW/reference/table_data.html</loc>
   </url>
   <url>
     <loc>https://danymukesha.github.io/MDAW/reference/table_peak.html</loc>
+  </url>
+  <url>
+    <loc>https://danymukesha.github.io/MDAW/reference/univariate_2class.html</loc>
   </url>
 </urlset>

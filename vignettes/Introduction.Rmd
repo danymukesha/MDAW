@@ -41,12 +41,12 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-The accurate analysis and interpretation of complex data sets is 
-of utmost importance in order to obtain meaningful biological insights.
-To address this issue, a robust computational workflow for statistical 
-analysis of both untargeted and targeted metabolomics data was developed. 
-Such a workflow not only ensures the reliability of results, but also 
-promotes reproducibility in data analysis and reporting -
+The accurate analysis and interpretation of complex data sets is of
+utmost importance in order to obtain meaningful biological insights. To
+address this issue, a robust computational workflow for statistical
+analysis of both untargeted and targeted metabolomics data was
+developed. Such a workflow not only ensures the reliability of results,
+but also promotes reproducibility in data analysis and reporting -
 `a fundamental principle for scientific integrity` (Resnik DB. et al.,
 2016).
 
@@ -188,11 +188,8 @@ set, basic statistical to measure each metabolite are already
 calculated, which were then stored in the `table_peak.` In this file,
 metabolites are stored in compliance with the following conditions:
 
-```         
-- A QC-RSD (Relative Standard Deviation) below 20%.
-
-- Fewer than 10% of values are absent.
-```
+-   A QC-RSD (Relative Standard Deviation) below 20%.
+-   Fewer than 10% of values are absent.
 
 ```{r}
 # filter clean metabolite from table_peak
@@ -202,6 +199,32 @@ clean_table_peak <- MDAW::clean_table_peak(table = table_peak,
 ```
 
 ## PCA (Principal Component Analysis)
+
+To effectively evaluate the quality of the cleaned dataset in a
+comprehensive manner, it is advisable to conduct a basic Principal
+Component Analysis (PCA) following appropriate transformation and
+scaling procedures. The PCA score plot typically categorizes samples by
+type, such as quality control (QC) or biological sample (Sample). In
+datasets of high quality, QC samples tend to cluster closely together
+compared to biological samples, as discussed by Broadhurst et al. in
+2018.
+
+Initially, the metabolite data matrix is extracted from the `table_data`
+and subjected to transformation and scaling:
+
+1.  A new variable, peaklist, is generated to store the names (M1...Mn)
+    of the metabolites intended for subsequent statistical analysis.
+2.  The peak data corresponding to this list for all samples is
+    extracted from the dataTable and organized into a matrix, X.
+3.  The values in X are subjected to a logarithmic transformation
+    (Xlog).
+4.  The `MDAW::scale_data()` helper function is employed to scale the
+    logarithmically transformed data (Xscale).
+5.  Missing values are imputed using a k-nearest neighbor approach with
+    three neighbors, resulting in the table Xknn.
+6.  The transformed and scaled dataset, Xknn, serves as input for PCA
+    using the `MDAW::pca_plot()` helper function, yielding PCA score and
+    loading plots for interpretation and quality assessment.
 
 ```{r}
 list_of_peaks <- clean_table_peak["Name"]
@@ -252,6 +275,10 @@ pca_plot <- MDAW::pca_interaction_plot(data = data,
 pca_plot
 ```
 
+## Univariate Statistics
+
+### Gastric Cancer (GC) vs Healthy Controls (HE) - Comparison
+
 ```{r}
 table_data_2Class <- table_data |>
   dplyr::filter(Class == c("HE", "GC"))
@@ -272,9 +299,15 @@ statsTable |>
   reactable::reactable()
 ```
 
-## Statistical Methods
+### Save to excel file
 
-### Mean and Standard Deviation
+```{r eval=FALSE}
+MDAW::save_to_xlsx(data = statsTable, sheet_name = "statsTable.xlsx")
+```
+
+# Statistical Methods
+
+## Mean and Standard Deviation
 
 The mean ($\bar{x}$) and standard deviation ($\sigma$) are calculated
 for each group:
@@ -297,7 +330,7 @@ $$ \bar{x} = \frac{12 + 15 + 18 + 20 + 25}{5} = \frac{90}{5} = 18 $$
 $$ \sigma = \sqrt{\frac{(12-18)^2 + (15-18)^2 + (18-18)^2 + (20-18)^2 + (25-18)^2}{5-1}} $$
 $$ \sigma = \sqrt{\frac{36 + 9 + 0 + 4 + 49}{4}} = \sqrt{\frac{98}{4}} \approx \sqrt{24.5} \approx 4.95 $$
 
-### Confidence Interval
+## Confidence Interval
 
 The 95% confidence interval for the mean is calculated using the
 standard error ($SE$):
@@ -313,7 +346,7 @@ $\sigma \approx 4.95$, and assuming a sample size of $n = 5$:
 $$ SE = \frac{4.95}{\sqrt{5}} \approx 2.21 $$
 $$ \text{CI} = 18 \pm (1.96 \times 2.21) \approx (13.66, 22.34) $$
 
-### T-test
+## T-test
 
 The t-test statistic is calculated to compare means between groups.
 
@@ -329,7 +362,7 @@ $$ t = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}
 Where $s_1$ and $s_2$ are the sample standard deviations, and $n_1$ and
 $n_2$ are the sample sizes.
 
-### Median and Bootstrap CI
+## Median and Bootstrap CI
 
 The median and its 95% bootstrap confidence interval are calculated for
 each group.
@@ -337,29 +370,34 @@ each group.
 *Example:*
 
 Suppose we have a dataset: [12, 15, 18, 20, 25]
-  
-    1. Calculate the median: Since the dataset has an odd number of observations, the median is the middle value, which is 18.
-    2. Calculate the bootstrap confidence interval: This involves resampling the dataset with replacement, calculating the median for each resampled dataset, and then finding the 2.5th and 97.5th percentiles of the medians.
 
-### Mann-Whitney U Test
+1.  Calculate the median: Since the dataset has an odd number of
+    observations, the median is the middle value, which is 18.
+
+2.  Calculate the bootstrap confidence interval: This involves
+    resampling the dataset with replacement, calculating the median for
+    each resampled dataset, and then finding the 2.5th and 97.5th
+    percentiles of the medians.
+
+## Mann-Whitney U Test
 
 The Mann-Whitney U test is used to compare medians between groups.
 
 *Example:*
 
 Suppose we have two groups with observations:
-       
-- Group 1: [12, 15, 18, 20, 25]
-- Group 2: [10, 14, 16, 19, 22]
 
-    1. Rank all the observations together.
-    2. Calculate the sum of ranks for each group.
-    3. Calculate the U statistic for each group.
-    4. Use the U statistics to determine if there is a significant difference
-    between the groups.
+-   Group 1: [12, 15, 18, 20, 25]
 
+-   Group 2: [10, 14, 16, 19, 22]
 
-### Shapiro-Wilk Test
+    1.  Rank all the observations together.
+    2.  Calculate the sum of ranks for each group.
+    3.  Calculate the U statistic for each group.
+    4.  Use the U statistics to determine if there is a significant
+        difference between the groups.
+
+## Shapiro-Wilk Test
 
 The Shapiro-Wilk test is performed to assess the normality of data
 distribution.
@@ -368,31 +406,38 @@ distribution.
 
 Suppose we have a dataset: [12, 15, 18, 20, 25]
 
-         
-1. Perform the Shapiro-Wilk test using statistical software or R functions.
-2. Obtain the test statistic and p-value.
-3. If the p-value is less than the significance level (e.g., 0.05), reject
-the null hypothesis and conclude that the data is not normally distributed.
+1.  Perform the Shapiro-Wilk test using statistical software or R
+    functions.
+2.  Obtain the test statistic and p-value.
+3.  If the p-value is less than the significance level (e.g., 0.05),
+    reject the null hypothesis and conclude that the data is not
+    normally distributed.
 
-
-### Levene’s Test
+## Levene’s Test
 
 Levene’s test is used to assess the equality of variances between
 groups.
 
 *Example:*
 
-Suppose we have two groups with observations: Group 1: [12, 15, 18, 20,
-25] Group 2: [10, 14, 16, 19, 22]
-        
-1. Calculate the absolute deviations from the group means.
-2. Calculate the mean of the absolute deviations for each group.
-3. Use these means to calculate the Levene statistic.
-4. Compare the Levene statistic to a critical value from the F-distribution
-to determine if the variances are significantly different.Sure, 
-let's provide full and complete formulas for each statistical method 
-along with examples and their resolving procedures.
+Suppose we have two groups with observations:
 
+-   Group 1: [12, 15, 18, 20, 25]
+
+-   Group 2: [10, 14, 16, 19, 22]
+
+    1.  Calculate the absolute deviations from the group means.
+    2.  Calculate the mean of the absolute deviations for each group.
+    3.  Use these means to calculate the Levene statistic.
+    4.  Compare the Levene statistic to a critical value from the
+        F-distribution to determine if the variances are significantly
+        different.Sure, let's provide full and complete formulas for
+        each statistical method along with examples and their resolving
+        procedures.
+
+# Machine Learning
+
+In stage of implementation...
 
 <details>
 

@@ -29,6 +29,8 @@ Imports:
     factoextra,
     impute,
     htmltools,
-    rlang
+    rlang,
+    writexl,
+    caret
 URL: https://danymukesha.github.io/MDAW/, https://github.com/danymukesha/MDAW
 BugReports: https://github.com/danymukesha/MDAW/issues

@@ -7,18 +7,18 @@
 clean_table_peak(table, min_QC_RSD = NULL, min_Perc_missing = NULL)
 }
 \arguments{
+\item{table}{The data frame containing metabolite
+information including QC_min_QC_RSD and min_Perc_missing.}
+
 \item{min_QC_RSD}{The Relative Standard Deviation}
 
 \item{min_Perc_missing}{The percentage of absent/missing values}
-
-\item{table_peak}{The data frame containing metabolite
-information including QC_min_QC_RSD and min_Perc_missing.}
 }
 \value{
 A data frame containing only clean metabolites.
 }
 \description{
-`clean_table_peak` filters clean metabolites from the provided
+[`clean_table_peak`] filters clean metabolites from the provided
 table_peak based on criteria, such as missing values and
 standard deviation of peaks.
 }

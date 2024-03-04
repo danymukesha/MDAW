@@ -25,9 +25,10 @@ Imports:
     sessioninfo,
     tibble,
     ggplot2,
-    plotly,
     stats,
-    purrr,
-    factoextra
+    factoextra,
+    impute,
+    htmltools,
+    rlang
 URL: https://danymukesha.github.io/MDAW/, https://github.com/danymukesha/MDAW
 BugReports: https://github.com/danymukesha/MDAW/issues

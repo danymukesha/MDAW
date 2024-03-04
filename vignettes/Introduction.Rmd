@@ -8,16 +8,26 @@ package: MDAW
 output:
   html_document
 abstract:
-    Metabolomics, the study of small molecules or metabolites within biological
+    Metabolomics, the study of small molecules (metabolites) within biological
     systems, has emerged as a powerful tool for understanding the intricate
     metabolic processes underlying various physiological and pathological
     conditions. However, the analysis of metabolomics data presents unique 
     challenges due to its complexity and high dimensionality.
+    In this context, the development of a comprehensive computational
+    framework is essential. This framework should seamlessly integrate
+    various analysis steps, from data preprocessing to advanced statistical
+    modeling, while adhering to best practices in data processing and
+    interpretation. This allows the users to clearly and confidently
+    navigate the intricacies of metabolomics data, enabling in-depth
+    scientific investigation and knowledge expansion.
     
 vignette: >
     %\VignetteIndexEntry{Introduction to MDAW}
-    %\VignetteEngine{knitr::rmarkdown}
     %\VignetteEncoding{UTF-8}
+    %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r, include = FALSE}
@@ -27,107 +37,96 @@ knitr::opts_chunk$set(
 )
 ```
 
-
 <br>
 
 # Introduction
 
-In metabolomics studies, the accurate analysis and interpretation
-of complex data sets is of utmost importance in order to obtain meaningful
-biological insights. To address this issue, a robust computational workflow 
-for statistical analysis of both untargeted and targeted metabolomics data 
-is essential. Such a workflow not only ensures the reliability of results, 
-but also promotes reproducibility in data analysis and reporting 
-- `a fundamental principle for scientific integrity` 
-(Resnik DB. et al., 2016). 
+The accurate analysis and interpretation of complex data sets is 
+of utmost importance in order to obtain meaningful biological insights.
+To address this issue, a robust computational workflow for statistical 
+analysis of both untargeted and targeted metabolomics data was developed. 
+Such a workflow not only ensures the reliability of results, but also 
+promotes reproducibility in data analysis and reporting -
+`a fundamental principle for scientific integrity` (Resnik DB. et al.,
+2016).
 
-In this context, the development of a comprehensive computational framework
-is necessary, This framework should seamlessly integrate various analysis 
-steps, from data preprocessing to advanced statistical modeling, while 
-adhering to best practices in data processing and interpretation. 
-This allows the users to clearly and confidently navigate the intricacies 
-of metabolomics data, enabling in-depth scientific investigation 
-and knowledge expansion. 
-
-This manuscript provides a designed computational workflow developed
-for the analysis of metabolomics data in binary classification studies. 
-The approach encompasses a range of techniques, including **univariate** 
-and **multivariate** statistical analyses, **quality control** procedures, 
-and **visualization** tools, all aimed at deciphering the complex metabolic 
-signatures underlying biological phenomena. By providing a structured 
-framework and leveraging state-of-the-art methods enhances the robustness 
-of data analysis in metabolomics.
+This manuscript provides a designed computational workflow developed for
+the analysis of metabolomics data in binary classification studies. The
+approach encompasses a range of techniques, including **univariate** and
+**multivariate** statistical analyses, **quality control** procedures,
+and **visualization** tools, all aimed at deciphering the complex
+metabolic signatures underlying biological phenomena. By providing a
+structured framework and leveraging state-of-the-art methods enhances
+the robustness of data analysis in metabolomics.
 
 # Outlines
 
-This framework aims integrate various analysis steps, from data preprocessing 
-to advanced statistical modeling, while adhering to best practices in data
-processing and interpretation. 
+Here are the outlines for `MDAW`, a workflow for analyzing metabolomics
+data, in a binary classification study. Let's see together the breakdown
+steps which consists this workflow:
 
-Here are the outlines for `MDAW`, a workflow for analyzing metabolomics data, 
-in a binary classification study. 
-Let's see together the breakdown steps which consists this workflow:
+1.  **Importing Data**: Start by importing both metabolite and
+    experimental data from an Excel sheet. This step ensures you have
+    all needed information for the analysis.
 
-1. **Importing Data**: Start by importing both metabolite and experimental data
-from an Excel sheet. This step ensures you have all needed information 
-for the analysis.
+2.  **Pooled QC-based Data Cleaning**: Quality control (QC) is important
+    in metabolomics to make sure that data obtained are reliable. Pooled
+    QC samples helps to identify and remove any technical variation or
+    artifacts in the data.
 
-2. **Pooled QC-based Data Cleaning**: Quality control (QC) is important 
-in metabolomics to make sure that data obtained are reliable. 
-Pooled QC samples helps to identify and remove any technical variation 
-or artifacts in the data.
+3.  **Principal Component Analysis (PCA) Visualization**: PCA is a
+    powerful tool for `assessing data quality`, `identifying outliers`,
+    and `gaining insights into the overall structure of the data`.
+    Visualizing the data using PCA plots help us to detect any
+    clustering or separation between sample groups.
 
-3. **Principal Component Analysis (PCA) Visualization**: PCA is a powerful 
-tool for `assessing data quality`, `identifying outliers`, 
-and `gaining insights into the overall structure of the data`. 
-Visualizing the data using PCA plots help us to detect any clustering 
-or separation between sample groups.
+4.  **Two-Class Univariate Statistics**: Perform uni-variate statistical
+    analysis to identify individual metabolites that show significant
+    differences between the two classes (e.g., control vs. treatment).
+    This analysis can involve statistical tests such as `t-tests` or
+    `ANOVA`, followed by correction for multiple comparisons if needed.
 
-4. **Two-Class Univariate Statistics**: Perform uni-variate statistical 
-analysis to identify individual metabolites that show significant differences
-between the two classes (e.g., control vs. treatment). This analysis can
-involve statistical tests such as `t-tests` or `ANOVA`, followed 
-by correction for multiple comparisons if needed.
+5.  **Multivariate Analysis with PLS-DA**:
 
-5. **Multivariate Analysis with PLS-DA**:
+    -   **Model Optimization (R2 vs. Q2)**: Optimize the PLS-DA model by
+        assessing the goodness of fit (R2) and predictive ability (Q2)
+        using cross-validation techniques.
 
-    - **Model Optimization (R2 vs. Q2)**: Optimize the PLS-DA model by assessing
-    the goodness of fit (R2) and predictive ability (Q2) using cross-validation
-    techniques.
+    -   **Permutation Testing**: Validate the PLS-DA model by
+        permutation testing to assess its statistical significance and
+        guard against overfitting.
 
-    - **Permutation Testing**: Validate the PLS-DA model by permutation testing
-    to assess its statistical significance and guard against overfitting.
+    -   **Model Prediction Metrics**: Evaluate the performance of the
+        PLS-DA model using metrics such as accuracy, sensitivity,
+        specificity, and area under the receiver operating
+        characteristic curve (AUC-ROC).
 
-    - **Model Prediction Metrics**: Evaluate the performance of the PLS-DA model
-    using metrics such as accuracy, sensitivity, specificity, and area under
-    the receiver operating characteristic curve (AUC-ROC).
+    -   **Feature Importance**: Identify important metabolites
+        contributing to the classification by examining variable
+        importance in projection (VIP) scores or loading plots.
 
-    - **Feature Importance**: Identify important metabolites contributing
-    to the classification by examining variable importance in projection (VIP)
-    scores or loading plots.
+    -   **Model Prediction Data Visualizations**: Visualize the results
+        of the PLS-DA model, such as score plots and class prediction
+        plots, to assess the separation between sample groups and the
+        model's predictive ability.
 
-    - **Model Prediction Data Visualizations**: Visualize the results
-    of the PLS-DA model, such as score plots and class prediction plots,
-    to assess the separation between sample groups
-    and the model's predictive ability.
-
-6. **Exporting Statistical Tables**: Export relevant statistical tables
-summarizing the results of univariate and multivariate analyses
-to Excel sheets for further examination and reporting.
+6.  **Exporting Statistical Tables**: Export relevant statistical tables
+    summarizing the results of univariate and multivariate analyses to
+    Excel sheets for further examination and reporting.
 
 This workflow should provide a well streamlined computational approach
 to analyzing metabolomics data in a binary classification study,
-integrating both univariate and multivariate statistical methods
-to identify biomarkers and gain insights into biological differences
+integrating both univariate and multivariate statistical methods to
+identify biomarkers and gain insights into biological differences
 between sample groups.
 
 # Case Study
 
 ## Libraries
 
-Libraries(or Packages) provide functions that extend the basic functionality 
-of the R language. We will need the following tools to analyse the data:
-
+Libraries(or Packages) provide functions that extend the basic
+functionality of the R language. We will need the following tools to
+analyse the data:
 
 ```{r setup, message=FALSE, warning=FALSE}
 library(MDAW)
@@ -139,10 +138,10 @@ library(sessioninfo)
 
 ## Import data/peak
 
-The chunk code below utilises a function called `import_dataXL()` to import
-the Peak and Data sheets from an Excel file. Once this is done, a notification
-appears to confirm that the Peak and Data tables have been loaded
-from the corresponding worksheets in the Excel file.
+The chunk code below utilises a function called `import_dataXL()` to
+import the Peak and Data sheets from an Excel file. Once this is done, a
+notification appears to confirm that the Peak and Data tables have been
+loaded from the corresponding worksheets in the Excel file.
 
 ```{r}
 # Theinput file (Excel spreadsheet)
@@ -161,18 +160,17 @@ table_peak <- MDAW::import_dataXL(xlsx_file_name = path, sheet_name = "Peak")
 
 ## Load table of data
 
-The data table offers an interactive display feature, allowing to easily 
-inspect and verify the imported values. This functionality can be accessed
-by utilizing the `reactable()` function.
+The data table offers an interactive display feature, allowing to easily
+inspect and verify the imported values. This functionality can be
+accessed by utilizing the `reactable()` function.
 
 ```{r}
 table_data  # View and check the table data 
 ```
 
-
 ## Load table of peaks
 
-The peak table offers an interactive display feature, allowing to easily 
+The peak table offers an interactive display feature, allowing to easily
 inspect and verify the imported values.
 
 ```{r}
@@ -182,19 +180,26 @@ table_peak |>
 
 ## Data Cleansing
 
-Before beginning statistical or machine learning modeling, it is important to assess the quality of your data and eliminate any inaccurately measured metabolites. This process ensures the integrity of your analytics. For this demonstration using the gastric cancer NMR data set, basic statistical to measure each metabolite are already calculated, which were then stored in the `table_peak.` In this file, metabolites are stored in compliance with the following conditions:
+Before beginning statistical or machine learning modeling, it is
+important to assess the quality of your data and eliminate any
+inaccurately measured metabolites. This process ensures the integrity of
+your analytics. For this demonstration using the gastric cancer NMR data
+set, basic statistical to measure each metabolite are already
+calculated, which were then stored in the `table_peak.` In this file,
+metabolites are stored in compliance with the following conditions:
 
-    - A QC-RSD (Relative Standard Deviation) below 20%.
-    
-    - Fewer than 10% of values are absent.
-    
+```         
+- A QC-RSD (Relative Standard Deviation) below 20%.
+
+- Fewer than 10% of values are absent.
+```
+
 ```{r}
 # filter clean metabolite from table_peak
 clean_table_peak <- MDAW::clean_table_peak(table = table_peak,
                          min_QC_RSD = 20,
                          min_Perc_missing = 20)
 ```
-
 
 ## PCA (Principal Component Analysis)
 
@@ -241,12 +246,12 @@ pca_plot <-  ggplot2::ggplot(pca_data,
 pca_plot
 ```
 
-
 ```{r warning=FALSE}
 pca_plot <- MDAW::pca_interaction_plot(data = data, 
                                        categories = categories)
 pca_plot
 ```
+
 ```{r}
 table_data_2Class <- table_data |>
   dplyr::filter(Class == c("HE", "GC"))
@@ -262,74 +267,77 @@ statsTable <- MDAW::univariate_2class(DataTable = table_data_2Class,
 
 ```
 
-
 ```{r}
 statsTable |> 
   reactable::reactable()
 ```
 
-
-## Statistical Formulas
+## Statistical Methods
 
 ### Mean and Standard Deviation
 
-The mean (\( \bar{x} \)) and standard deviation (\( \sigma \)) are calculated for each group:
+The mean ($\bar{x}$) and standard deviation ($\sigma$) are calculated
+for each group:
 
-Mean:
-\[ \bar{x} = \frac{\sum_{i=1}^{n} x_i}{n} \]
+Mean: $$ \bar{x} = \frac{\sum_{i=1}^{n} x_i}{n} $$
 
 Standard Deviation:
-\[ \sigma = \sqrt{\frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n - 1}} \]
+$$ \sigma = \sqrt{\frac{\sum_{i=1}^{n} (x_i - \bar{x})^2}{n - 1}} $$
 
 *Example:*
 
 Suppose we have a dataset: [12, 15, 18, 20, 25]
 
-    1. Calculate the mean: 
-    \[ \bar{x} = \frac{12 + 15 + 18 + 20 + 25}{5} = \frac{90}{5} = 18 \]
-    2. Calculate the standard deviation:
-    \[ \sigma = \sqrt{\frac{(12-18)^2 + (15-18)^2 + (18-18)^2 + (20-18)^2 + (25-18)^2}{5-1}} \]
-    \[ \sigma = \sqrt{\frac{36 + 9 + 0 + 4 + 49}{4}} = \sqrt{\frac{98}{4}} \approx \sqrt{24.5} \approx 4.95 \]
-    
+1.  Calculate the mean:
 
+$$ \bar{x} = \frac{12 + 15 + 18 + 20 + 25}{5} = \frac{90}{5} = 18 $$
+
+2.  Calculate the standard deviation:
+
+$$ \sigma = \sqrt{\frac{(12-18)^2 + (15-18)^2 + (18-18)^2 + (20-18)^2 + (25-18)^2}{5-1}} $$
+$$ \sigma = \sqrt{\frac{36 + 9 + 0 + 4 + 49}{4}} = \sqrt{\frac{98}{4}} \approx \sqrt{24.5} \approx 4.95 $$
 
 ### Confidence Interval
 
-The 95% confidence interval for the mean is calculated using the standard error (\( SE \)):
+The 95% confidence interval for the mean is calculated using the
+standard error ($SE$):
 
-\[ \text{CI} = \bar{x} \pm (1.96 \times SE) \]
+$$ \text{CI} = \bar{x} \pm (1.96 \times SE) $$
 
-Where,
-\[ SE = \frac{\sigma}{\sqrt{n}} \]
+Where, $$ SE = \frac{\sigma}{\sqrt{n}} $$
 
 **Example:**
 
-Using the previous example where \( \bar{x} = 18 \) and \( \sigma \approx 4.95 \), and assuming a sample size of \( n = 5 \):
-\[ SE = \frac{4.95}{\sqrt{5}} \approx 2.21 \]
-\[ \text{CI} = 18 \pm (1.96 \times 2.21) \approx (13.66, 22.34) \]
-
+Using the previous example where $\bar{x} = 18$ and
+$\sigma \approx 4.95$, and assuming a sample size of $n = 5$:
+$$ SE = \frac{4.95}{\sqrt{5}} \approx 2.21 $$
+$$ \text{CI} = 18 \pm (1.96 \times 2.21) \approx (13.66, 22.34) $$
 
 ### T-test
 
 The t-test statistic is calculated to compare means between groups.
 
-The formula for the t-test statistic depends on whether the variances are assumed to be equal or unequal.
+The formula for the t-test statistic depends on whether the variances
+are assumed to be equal or unequal.
 
 *Example:*
 
-Suppose we have two groups with sample means \( \bar{x}_1 = 18 \) and \( \bar{x}_2 = 20 \), and assuming equal variances:
-\[ t = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}} \]
+Suppose we have two groups with sample means $\bar{x}_1 = 18$ and
+$\bar{x}_2 = 20$, and assuming equal variances:
+$$ t = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}} $$
 
-Where \( s_1 \) and \( s_2 \) are the sample standard deviations, and \( n_1 \) and \( n_2 \) are the sample sizes.
+Where $s_1$ and $s_2$ are the sample standard deviations, and $n_1$ and
+$n_2$ are the sample sizes.
 
 ### Median and Bootstrap CI
 
-The median and its 95% bootstrap confidence interval are calculated for each group.
+The median and its 95% bootstrap confidence interval are calculated for
+each group.
 
 *Example:*
 
 Suppose we have a dataset: [12, 15, 18, 20, 25]
-
+  
     1. Calculate the median: Since the dataset has an odd number of observations, the median is the middle value, which is 18.
     2. Calculate the bootstrap confidence interval: This involves resampling the dataset with replacement, calculating the median for each resampled dataset, and then finding the 2.5th and 97.5th percentiles of the medians.
 
@@ -340,53 +348,58 @@ The Mann-Whitney U test is used to compare medians between groups.
 *Example:*
 
 Suppose we have two groups with observations:
+       
+- Group 1: [12, 15, 18, 20, 25]
+- Group 2: [10, 14, 16, 19, 22]
 
-    - Group 1: [12, 15, 18, 20, 25]
-    - Group 2: [10, 14, 16, 19, 22]
-
-        1. Rank all the observations together.
-        2. Calculate the sum of ranks for each group.
-        3. Calculate the U statistic for each group.
-        4. Use the U statistics to determine if there is a significant difference
-        between the groups.
+    1. Rank all the observations together.
+    2. Calculate the sum of ranks for each group.
+    3. Calculate the U statistic for each group.
+    4. Use the U statistics to determine if there is a significant difference
+    between the groups.
 
 
 ### Shapiro-Wilk Test
 
-The Shapiro-Wilk test is performed to assess the normality 
-of data distribution.
-
+The Shapiro-Wilk test is performed to assess the normality of data
+distribution.
 
 *Example:*
 
 Suppose we have a dataset: [12, 15, 18, 20, 25]
 
-    1. Perform the Shapiro-Wilk test using statistical software or R functions.
-    2. Obtain the test statistic and p-value.
-    3. If the p-value is less than the significance level (e.g., 0.05), reject
-    the null hypothesis and conclude that the data is not normally distributed.
+         
+1. Perform the Shapiro-Wilk test using statistical software or R functions.
+2. Obtain the test statistic and p-value.
+3. If the p-value is less than the significance level (e.g., 0.05), reject
+the null hypothesis and conclude that the data is not normally distributed.
+
 
 ### Levene’s Test
-Levene’s test is used to assess the equality of variances between groups.
+
+Levene’s test is used to assess the equality of variances between
+groups.
 
 *Example:*
 
-Suppose we have two groups with observations:
-Group 1: [12, 15, 18, 20, 25]
-Group 2: [10, 14, 16, 19, 22]
-
-    1. Calculate the absolute deviations from the group means.
-    2. Calculate the mean of the absolute deviations for each group.
-    3. Use these means to calculate the Levene statistic.
-    4. Compare the Levene statistic to a critical value from the F-distribution
-    to determine if the variances are significantly different.Sure, 
-    let's provide full and complete formulas for each statistical method 
-    along with examples and their resolving procedures.
+Suppose we have two groups with observations: Group 1: [12, 15, 18, 20,
+25] Group 2: [10, 14, 16, 19, 22]
+        
+1. Calculate the absolute deviations from the group means.
+2. Calculate the mean of the absolute deviations for each group.
+3. Use these means to calculate the Levene statistic.
+4. Compare the Levene statistic to a critical value from the F-distribution
+to determine if the variances are significantly different.Sure, 
+let's provide full and complete formulas for each statistical method 
+along with examples and their resolving procedures.
 
 
 <details>
+
 <summary>**Session Info**</summary>
+
 ```{r sessioninfo}
 sessioninfo::session_info()
 ```
+
 </details>

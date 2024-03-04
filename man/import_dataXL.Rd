@@ -26,6 +26,6 @@ library(MDAW)
 excel_file <- "Gastric_NMR.xlsx"
 path <- system.file("extdata", "Gastric_NMR.xlsx", package = "MDAW")
 MDAW::import_dataXL(xlsx_file_name = path,
-    sheet_name = "data")
+    sheet_name = "Data")
 
 }

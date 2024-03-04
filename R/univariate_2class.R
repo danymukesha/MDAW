@@ -26,10 +26,17 @@
 #'
 #' @examples
 #' # Example usage
-#' univariate_2class(DataTable, PeakTable, group = "Class", posclass = "A")
+#' DataTable <- MDAW::table_data
+#' PeakTable <- MDAW::table_peak
+#' table_data_2Class <- DataTable |>
+#'       dplyr::filter(Class == c("HE", "GC"))
+#' # Reduce data table only to GC and HE class members
+#' pos_outcome <- "GC"
+#' univariate_2class(table_data_2Class, PeakTable, group = "Class",
+#'       posclass = pos_outcome)
 #'
 #' @importFrom dplyr filter mutate select
-#' @importFrom stats median quantile t.test wilcox.test
+#' @importFrom stats median quantile t.test wilcox.test sd shapiro.test
 #' @importFrom stats p.adjust
 #' @importFrom utils packageVersion
 #'

@@ -20,7 +20,11 @@ and generates a PCA plot with interaction using the ggplot2 and factoextra packa
 }
 \examples{
 # Example usage
-# pca_interaction_plot(data = table_data, categories = c("Category1", "Category2"))
+dat <- MDAW::table_data |>
+    dplyr::select(-c(1:5))
+cat <- MDAW::table_data |>
+    dplyr::select(c(4:5))
+# pca_interaction_plot(data = dat, categories = cat)
 
 }
 \seealso{

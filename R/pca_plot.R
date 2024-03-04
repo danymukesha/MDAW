@@ -14,7 +14,11 @@
 #'
 #' @examples
 #' # Example usage
-#' # pca_interaction_plot(data = table_data, categories = c("Category1", "Category2"))
+#' dat <- MDAW::table_data |>
+#'     dplyr::select(-c(1:5))
+#' cat <- MDAW::table_data |>
+#'     dplyr::select(c(4:5))
+#' # pca_interaction_plot(data = dat, categories = cat)
 #'
 #' @export
 #' @seealso \code{\link{prcomp}}, \code{\link{fviz_pca_ind}}, \code{\link{ggplot2}}, \code{\link{theme_minimal}}

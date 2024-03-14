@@ -9,6 +9,7 @@
 #' @param min_QC_RSD The Relative Standard Deviation
 #' @param min_Perc_missing The percentage of absent/missing values
 #' @return A data frame containing only clean metabolites.
+#'
 #' @examples
 #' library(MDAW)
 #' peaks <- MDAW::table_peak
@@ -22,6 +23,7 @@
 clean_table_peak <- function(table,
                              min_QC_RSD = NULL,
                              min_Perc_missing = NULL) {
+
     if ((!is.null(min_QC_RSD)) || (!is.null(min_Perc_missing))) {
         clean_table <- table |>
             dplyr::filter(.data$QC_RSD < min_QC_RSD,

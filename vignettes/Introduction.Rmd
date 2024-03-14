@@ -437,6 +437,117 @@ Suppose we have two groups with observations:
 
 # Machine Learning
 
+
+## Splitting data into Training and Test sets.
+
+Multivariate predictive models often encounters a challenge of **overfitting**, 
+which can compromise their performance. To mitigate this issue, 
+it's good practice to divide the source data into two subsets: 
+a training set and a test set, allowing for independent evaluation. 
+This approach, advocated by researchers such as `Westerhuis et al. (2008)` 
+and `Xia et al. (2012)`, ensures a more accurate assessment of model 
+performance. The model is then fine-tuned using the training data 
+and independently assessed using the test data. 
+
+The true effectiveness of the model can only be accurately gauged 
+using the test data. It's crucial that both the training and test 
+datasets adequately represent the population being studied. 
+A typical approach is to split the data in a 2:1 ratio (⅔ for training, 
+⅓ for testing) using stratified random sampling. While this step may be 
+omitted for exploratory purposes or with limited sample sizes, 
+caution is warranted when interpreting a model that hasn't been 
+validated on an independent dataset. Employing techniques like 
+stratified random sampling helps maintain class balance in both training 
+and test sets, a fundamental requirement for reliable model assessment.
+
+In the context of the given`table_data` dataframe, which focuses on 
+a 2-class comparison (GC vs HE), the objective is to partition 
+this dataframe into a training subset (dataTrain) for model training 
+and a test set (dataTest) for model evaluation. The data split is configured 
+so that the test set comprises 25% of the total samples. This partitioning 
+process is conducted using the 'train_test_split()' function from 
+the scikit-learn module.
+
+Ensuring that the sample split is stratified is essential to maintain
+balanced class representation in both the training and test sets. 
+To achieve this, a binary vector indicating stratification group 
+membership is required. Since the 'train_test_split()' function expects
+binary (1/0) outcome indicators rather than the GC/HE class labels 
+present in `table_data`, the class information for each sample is
+converted into a binary list, denoted as 'Y', in the provided code cell.
+
+
+```{r}
+Y <- MDAW::create_binary_Y(dataTable = table_data_2Class, 
+                           classColumn = "Class")
+```
+
+
+```{r}
+split_data <- MDAW::custom_train_test_split(table_data_2Class, Y, 
+                                            test_size = 0.25, seed = 123)
+dim(split_data$dataTrain)
+dim(split_data$dataTest)
+```
+
+
+
+
+Given the dataset (dataTable2) and a binary outcome list (Y) used for '
+stratification, we employ the `train_test_split()` function in the following
+code cell. Upon creating the training and test sets, summary output 
+will be displayed:
+
+DataTrain: Consists of 62 samples, including 32 positive cases.
+DataTest: Comprises 21 samples, with 11 being positive cases.
+Two new dataframes and two lists are generated:
+
+1. **dataTrain**: Represents the training dataset (dataframe).
+2. **dataTest**: Represents the test dataset (dataframe).
+3. **Ytrain**: Contains known outcomes for the training dataset.
+4. **Ytest**: Contains known outcomes for the test dataset.
+
+
+## Determine optimal number of components for PLS-DA model
+
+
+The most common approach for identifying the best PLS-DA model setup 
+without risking overfitting involves employing k-fold cross-validation.
+Specifically tailored to PLS-DA, this entails a systematic search across
+models with 1 to N latent variables (components). Initially, each PLS-DA
+setup undergoes training using all available data (XTknn and Ytrain),
+followed by assessing its predictive performance using the same data,
+usually by computing the coefficient of determination R^2. This yields
+N evaluation scores ($R^2_1$, $R^2_2$, ..., $R^2_N$). Subsequently, the training
+data is partitioned into k equally sized subsets (folds). For every PLS-DA
+configuration, k models are constructed, where each model is trained 
+on k−1 folds, and the remaining 1-fold is utilized for model evaluation, 
+recording the model predictions. This process ensures that each fold 
+is held-out exactly once after k models. The model's general predictive 
+ability is then gauged by comparing these held-out model predictions
+to the anticipated classification (cross-validated coefficient 
+of determination $Q^2$), yielding N cross-validated evaluation scores 
+($Q^2_1$, $Q^2_2$, ..., $Q^2_N$). Plotting the values of R^2 and Q^2 against
+the model's complexity (number of latent variables) typically reveals
+an initial rise and subsequent decline in $Q^2$. The point where Q^2 starts
+to deviate from R^2 signifies the optimal number of components,
+indicating a balance between model complexity and overfitting.
+
+In this section, we conduct 5-fold cross-validation using the previously
+established training set (dataTrain) to ascertain the ideal number
+of components for our PLS-DA model.
+
+Firstly, in the following cell, we preprocess and standardize the training
+data in dataTrain, employing the same techniques as in the previous section 
+for PCA quality assessment (log-transformation, scaling, and 
+k-nearest-neighbour imputation of missing values).
+
+
+
+```{r}
+data
+```
+
 In stage of implementation...
 
 <details>

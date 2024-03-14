@@ -35,7 +35,6 @@
 #' univariate_2class(table_data_2Class, PeakTable, group = "Class",
 #'       posclass = pos_outcome)
 #'
-#' @importFrom dplyr filter mutate select
 #' @importFrom stats median quantile t.test wilcox.test sd shapiro.test
 #' @importFrom stats p.adjust
 #' @importFrom utils packageVersion

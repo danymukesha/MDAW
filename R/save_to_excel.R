@@ -10,10 +10,7 @@
 #'
 #' @importFrom writexl write_xlsx
 #'
-#' @examples
-#' library(tibble)
-#' data <- tibble(x = 1:5, y = letters[1:5])
-#' save_to_xlsx(data, "data.xlsx")
+#' @example man/examples/save_excel_example.R
 #'
 #' @export
 save_to_xlsx <- function(data, path) {

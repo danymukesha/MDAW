@@ -25,7 +25,16 @@
     <loc>https://danymukesha.github.io/MDAW/reference/MDAW-package.html</loc>
   </url>
   <url>
+    <loc>https://danymukesha.github.io/MDAW/reference/calculate_descriptive_stats.html</loc>
+  </url>
+  <url>
     <loc>https://danymukesha.github.io/MDAW/reference/clean_table_peak.html</loc>
+  </url>
+  <url>
+    <loc>https://danymukesha.github.io/MDAW/reference/create_binary_Y.html</loc>
+  </url>
+  <url>
+    <loc>https://danymukesha.github.io/MDAW/reference/custom_train_test_split.html</loc>
   </url>
   <url>
     <loc>https://danymukesha.github.io/MDAW/reference/import_dataXL.html</loc>
@@ -35,6 +44,15 @@
   </url>
   <url>
     <loc>https://danymukesha.github.io/MDAW/reference/pca_interaction_plot.html</loc>
+  </url>
+  <url>
+    <loc>https://danymukesha.github.io/MDAW/reference/plot_metabolite_boxplots.html</loc>
+  </url>
+  <url>
+    <loc>https://danymukesha.github.io/MDAW/reference/plot_metabolite_boxplots_by_class.html</loc>
+  </url>
+  <url>
+    <loc>https://danymukesha.github.io/MDAW/reference/plot_metabolite_histogram.html</loc>
   </url>
   <url>
     <loc>https://danymukesha.github.io/MDAW/reference/save_to_xlsx.html</loc>

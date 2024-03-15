@@ -295,8 +295,7 @@ statsTable <- MDAW::univariate_2class(DataTable = table_data_2Class,
 ```
 
 ```{r}
-statsTable |> 
-  reactable::reactable()
+statsTable 
 ```
 
 ### Save to excel file
@@ -544,9 +543,6 @@ k-nearest-neighbour imputation of missing values).
 
 
 
-```{r}
-data
-```
 
 In stage of implementation...
 

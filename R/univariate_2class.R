@@ -38,6 +38,7 @@
 #' @importFrom stats median quantile t.test wilcox.test sd shapiro.test
 #' @importFrom stats p.adjust
 #' @importFrom utils packageVersion
+#' @import DT
 #'
 univariate_2class <- function(DataTable,
                               PeakTable,
@@ -149,5 +150,16 @@ univariate_2class <- function(DataTable,
   #   levene.test(newx0, newx1)$p.value
   # })
 
+  StatsTable <- StatsTable |>
+    as.data.frame() |>
+    datatable(
+      extensions = 'Buttons',
+      options = list(
+        dom = 'Blfrtip',
+        buttons = c('copy', 'csv', 'excel'),
+        lengthMenu = list(c(10, 25, 50, -1),
+                          c(10, 25, 50, "All"))
+      )
+    )
   return(StatsTable)
 }
